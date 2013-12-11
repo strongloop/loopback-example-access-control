@@ -1,0 +1,7 @@
+.git*
+test/
+.DS_Store
+node_modules/
+npm-debug.log
+build
+.lock-wscript

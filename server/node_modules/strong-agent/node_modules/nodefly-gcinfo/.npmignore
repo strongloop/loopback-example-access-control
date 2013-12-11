@@ -1,0 +1,9 @@
+build
+Vagrantfile
+.vagrant
+.mysql
+.lock-wscript
+node_modules
+
+gcinfo.sublime-project
+gcinfo.sublime-workspace

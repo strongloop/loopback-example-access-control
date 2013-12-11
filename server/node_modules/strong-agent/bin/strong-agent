@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+var path = require('path');
+try {
+	var config = require(process.cwd() + '/strongloop.json');
+} catch (e) {
+	console.error('Could not find strongloop.json');
+}
+if (config) {
+	require('strong-agent').profile(config.key, config.appname, config.options);
+	require(path.resolve(process.argv[2]));
+}

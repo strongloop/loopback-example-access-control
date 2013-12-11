@@ -1,0 +1,11 @@
+{
+  "content": [
+    "README.md",
+    {"title": "API", "depth": 2},
+    "lib/client.js",
+    "lib/cmd.js",
+    "lib/debug.js",
+    "lib/master.js",
+    "lib/msg.js"
+  ]
+}

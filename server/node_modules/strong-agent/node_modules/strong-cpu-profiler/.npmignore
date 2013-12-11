@@ -1,0 +1,7 @@
+build
+lib-cov
+node_modules
+.lock-wscript
+*.swp
+*.swo
+.DS_Store
