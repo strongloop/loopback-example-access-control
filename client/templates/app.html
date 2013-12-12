@@ -1,0 +1,73 @@
+<side-menus>
+  <pane side-menu-content>
+    <header class="bar bar-header bar-assertive">
+      <button class="button button-icon" ng-click="toggleLeft()"><i class="icon ion-navicon"></i></button>
+      <h1 class="title">{{ title }}</h1>
+    </header>
+    <div class="content has-header">
+      <div class="card">
+        <div class="item item-divider">
+          Account
+        </div>
+        <a href="#" class="item item-icon-left">
+          <div class="row">
+            <div class="col col-33 col-center">
+              <strong>Cash</strong>
+            </div>
+            <div class="col col-33 col-offset-33 col-center">
+              <h1>{{ (availableCash || 0) | currency }}</h1>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="card">
+        <div class="item item-divider">
+          Cash Flow
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="row">
+              <div class="col-66 item range range-positive">
+                <input type="range" name="volume" min="0" max="100" value="33">
+              </div>
+              <div class="col-33 col-center padding-left">
+                <strong>{{ (totalEarned || 0) | currency }}</strong> Earned
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-66 item range range-positive">
+                <input type="range" name="volume" min="0" max="100" value="33">
+              </div>
+              <div class="col-33 col-center padding-left">
+                <strong>{{ (totalSpent || 0) | currency }}</strong> Spent
+              </div>
+            </div>
+          </div>
+          <div class="col padding-left col-center">
+            <h2>{{ (availableCash || 0) | currency }}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </pane>
+  <side-menu side="left">
+    <header class="bar bar-header bar-assertive">
+      <h1 class="title">Account Options</h1>
+    </header>
+    <content has-header="true">
+      <ul class="list">
+        <a href="#" class="item" ng-repeat="item in options">
+          {{item.text}}
+        </a>
+      </ul>
+    </content>
+  </side-menu>
+  <side-menu side="right">
+    <header class="bar bar-header bar-assertive">
+      <h1 class="title">Recent</h1>
+    </header>
+    <content has-header="true">
+      Recent transactions...
+    </content>
+  </side-menu>
+</side-menus>
