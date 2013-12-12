@@ -13,6 +13,6 @@
     "loopback-explorer": "~1.0.0"
   },
   "devDependencies": {
-    "loopback-testing": "0.0.1"
+    "loopback-testing": "~0.0.2"
   }
 }

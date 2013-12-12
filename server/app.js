@@ -51,6 +51,8 @@ app.use(loopback.methodOverride());
 
 // LoopBack REST interface
 var apiPath = '/api';
+app.use(loopback.cookieParser('secret'));
+app.use(loopback.token({model: app.models.accessToken}));
 app.use(apiPath, loopback.rest());
 
 // API explorer (if present)

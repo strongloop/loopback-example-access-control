@@ -1,10 +1,22 @@
 var loopback = require('loopback');
 var lt = require('loopback-testing');
 var app = require('../');
+var assert = require('assert');
 var USER = {email: 'test@test.test', password: 'test'};
 var CURRENT_USER = {email: 'current@test.test', password: 'test'};
 
 lt.beforeEach.withApp(app);
+
+describe('accessToken', function() {
+  it('should be a sublcass of AccessToken', function () {
+    assert(app.models.accessToken.prototype instanceof loopback.AccessToken);
+  });
+
+  it('should have a validate method', function () {
+    var token = new app.models.accessToken;
+    assert.equal(typeof token.validate, 'function');  
+  });
+});
 
 describe('/accessToken', function() {
 
@@ -25,10 +37,6 @@ describe('/accessToken', function() {
   lt.it.shouldBeDeniedWhenCalledAnonymously('GET', urlForToken);
   lt.it.shouldBeDeniedWhenCalledUnauthenticated('GET', urlForToken);
   lt.it.shouldBeDeniedWhenCalledByUser(USER, 'GET', urlForToken);
-
-  lt.it.shouldBeDeniedWhenCalledAnonymously('POST', urlForToken);
-  lt.it.shouldBeDeniedWhenCalledUnauthenticated('POST', urlForToken);
-  lt.it.shouldBeDeniedWhenCalledByUser(USER, 'POST', urlForToken);
 
   lt.it.shouldBeDeniedWhenCalledAnonymously('PUT', urlForToken);
   lt.it.shouldBeDeniedWhenCalledUnauthenticated('PUT', urlForToken);
@@ -59,9 +67,9 @@ describe('/users', function () {
   lt.it.shouldBeAllowedWhenCalledUnauthenticated('POST', '/api/users');
   lt.it.shouldBeAllowedWhenCalledByUser(CURRENT_USER, 'POST', '/api/users');
 
-  lt.it.shouldBeDeniedWhenCalledAnonymously('POST', urlForUser);
-  lt.it.shouldBeDeniedWhenCalledUnauthenticated('POST', urlForUser);
-  lt.it.shouldBeDeniedWhenCalledByUser(CURRENT_USER, 'POST', urlForUser);
+  lt.describe.whenCalledRemotely('DELETE', '/api/users', function() {
+    lt.it.shouldNotBeFound();
+  });
 
   lt.it.shouldBeDeniedWhenCalledAnonymously('PUT', urlForUser);
   lt.it.shouldBeDeniedWhenCalledUnauthenticated('PUT', urlForUser);
@@ -71,8 +79,6 @@ describe('/users', function () {
   lt.it.shouldBeDeniedWhenCalledUnauthenticated('PUT', urlForUser);
   lt.it.shouldBeDeniedWhenCalledByUser(CURRENT_USER, 'PUT', urlForUser);
 
-  lt.it.shouldBeDeniedWhenCalledAnonymously('DELETE', '/api/users');
-  lt.it.shouldBeDeniedWhenCalledUnauthenticated('DELETE', '/api/users');
   lt.describe.whenLoggedInAsUser(CURRENT_USER, function() {
     beforeEach(function() {
       this.url = '/api/users/' + this.user.id + '?ok';
@@ -155,6 +161,6 @@ describe('/accounts', function () {
   lt.it.shouldBeDeniedWhenCalledByUser(CURRENT_USER, 'DELETE', urlForAccount);
 
   function urlForAccount() {
-    return '/api/accounts/' + this.bank.id;
+    return '/api/accounts/' + this.account.id;
   }
 });
