@@ -11,10 +11,10 @@
         </div>
         <a href="#" class="item item-icon-left">
           <div class="row">
-            <div class="col col-33 col-center">
+            <div class="col col-20 col-center">
               <strong>Cash</strong>
             </div>
-            <div class="col col-33 col-offset-33 col-center">
+            <div class="col col-80 col-center">
               <h1>{{ (availableCash || 0) | currency }}</h1>
             </div>
           </div>
@@ -44,7 +44,7 @@
             </div>
           </div>
           <div class="col padding-left col-center">
-            <h2>{{ (availableCash || 0) | currency }}</h2>
+            <h2>{{ (cashFlow || 0) | currency }}</h2>
           </div>
         </div>
       </div>
@@ -67,7 +67,12 @@
       <h1 class="title">Recent</h1>
     </header>
     <content has-header="true">
-      Recent transactions...
+      <ul class="list">
+        <a href="#" class="item" ng-repeat="item in transactions">
+          {{ item.pos }}<br />
+          <strong>{{ item.debit || item.credit }}</strong>
+        </a>
+      </ul>
     </content>
   </side-menu>
 </side-menus>

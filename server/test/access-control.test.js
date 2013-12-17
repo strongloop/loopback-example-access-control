@@ -86,6 +86,12 @@ describe('/users', function () {
     lt.describe.whenCalledRemotely('DELETE', '/api/users/:id', function() {
       lt.it.shouldBeAllowed();
     });
+    lt.describe.whenCalledRemotely('GET', '/api/users/:id', function() {
+      lt.it.shouldBeAllowed();
+    });
+    lt.describe.whenCalledRemotely('PUT', '/api/users/:id', function() {
+      lt.it.shouldBeAllowed();
+    });
   });
 
   lt.it.shouldBeDeniedWhenCalledAnonymously('DELETE', urlForUser);

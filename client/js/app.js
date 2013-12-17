@@ -27,11 +27,25 @@ angular.module('starter', ['ionic', 'ngRoute', 'ngAnimate', 'starter.services', 
     controller: 'RegisterCtrl'
   });
 
+  $routeProvider.when('/login', {
+    templateUrl: 'templates/login.html',
+    controller: 'LoginCtrl'
+  });
+
   // if none of the above routes are met, use this fallback
   // which executes the 'AppCtrl' controller (controllers.js)
   $routeProvider.otherwise({
     redirectTo: '/home'
   });
 
+})
+
+.run(function($rootScope, $location) {
+  $rootScope.$on("$routeChangeStart", function(event, next, current) {
+    console.log('$rootScope.currentUserId', $rootScope.currentUserId);
+    if(!$rootScope.currentUserId && $location.path() !== '/login') {
+      $location.path("/login");
+    }
+  });
 });
 

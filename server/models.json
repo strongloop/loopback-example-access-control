@@ -34,6 +34,19 @@
           "permission": "DENY",
           "principalType": "ROLE",
           "principalId": "$everyone"
+        },
+        {
+          "accessType": "*",
+          "permission": "ALLOW",
+          "principalType": "ROLE",
+          "property": "login",
+          "principalId": "$everyone"
+        },
+        {
+          "permission": "ALLOW",
+          "property": "findById",
+          "principalType": "ROLE",
+          "principalId": "$owner"
         }
       ]
     },
@@ -131,6 +144,21 @@
       "acls": [
         {
           "accessType": "*",
+          "permission": "DENY",
+          "principalType": "ROLE",
+          "principalId": "$everyone"
+        }
+      ]
+    },
+    "properties": {},
+    "public": true,
+    "dataSource": "db"
+  },
+  "alert": {
+    "options": {
+      "acls": [
+        {
+          "accessType": "WRITE",
           "permission": "DENY",
           "principalType": "ROLE",
           "principalId": "$everyone"
