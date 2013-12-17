@@ -4,6 +4,10 @@ angular.module('starter.services', ['ngResource'])
       login: {
         method: 'POST',
         url: '/api/users/login'
+      },
+      logout: {
+        method: 'POST',
+        url: '/api/users/logout'
       }
     });
   }])
@@ -11,7 +15,6 @@ angular.module('starter.services', ['ngResource'])
     $httpProvider.interceptors.push('requestInterceptor');
   })
   .factory('requestInterceptor', function ($q, $rootScope) {
-    console.log('...?');
     return {
            'request': function (config) {
                 console.log('config', config);

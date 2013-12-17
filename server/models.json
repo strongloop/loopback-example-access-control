@@ -26,6 +26,10 @@
         "account": {
           "model": "account",
           "type": "belongsTo"
+        },
+        "transactions": {
+          "model": "transaction",
+          "type": "hasMany"
         }
       },
       "acls": [
@@ -53,6 +57,12 @@
           "property": "updateAttributes",
           "principalType": "ROLE",
           "principalId": "$owner"
+        },
+        {
+          "permission": "ALLOW",
+          "property": "logout",
+          "principalType": "ROLE",
+          "principalId": "$everyone"
         }
       ]
     },

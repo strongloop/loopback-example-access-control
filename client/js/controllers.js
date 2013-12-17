@@ -1,8 +1,9 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($rootScope, $scope, User) {
+.controller('AppCtrl', function($rootScope, $scope, User, $location) {
   $scope.title = 'Overview';
 
+  $scope.currentUser = 
   $rootScope.currentUser = User.get({id: $rootScope.currentUserId}, function() {
     console.log(arguments);
   }, function() {
@@ -10,17 +11,14 @@ angular.module('starter.controllers', [])
   });
 
   $scope.options = [
-    {text: 'Logout'},
-    {text: 'Transfer Money'}
-  ];
-
-  $scope.availableCash = 4987899387;
-
-  $scope.transactions = [
-    {debit: 200.85, pos: 'Some Store Somewhere'},
-    {credit: 10.95, pos: 'Some Store Somewhere'},
-    {debit: 89.99, pos: 'Some Store Somewhere'},
-    {debit: 12.28, pos: 'Some Store Somewhere'}
+    {text: 'Logout', action: function() {
+      User.logout(function() {
+        $scope.currentUser = 
+        $rootScope.currentUser =
+        $rootScope.accessToken = undefined;
+        $location.path('/');
+      });
+    }}
   ];
 
   $scope.toggleLeft = function() {
@@ -30,7 +28,10 @@ angular.module('starter.controllers', [])
 
 .controller('LoginCtrl', function($rootScope, $scope, $routeParams, User, $location) {
   $scope.registration = {};
-  $scope.credentials = {};
+  $scope.credentials = {
+    email: 'foo@bar.com',
+    password: '123456'
+  };
 
   $scope.login = function() {
     $scope.loginResult = User.login($scope.credentials,

@@ -7,7 +7,8 @@
     <div class="content has-header">
       <div class="card">
         <div class="item item-divider">
-          Account
+          {{ currentUser.firstName }}
+          {{ currentUser.lastName }}'s Account
         </div>
         <a href="#" class="item item-icon-left">
           <div class="row">
@@ -15,7 +16,7 @@
               <strong>Cash</strong>
             </div>
             <div class="col col-80 col-center">
-              <h1>{{ (availableCash || 0) | currency }}</h1>
+              <h1>{{ (currentUser.balance || 0) | currency }}</h1>
             </div>
           </div>
         </a>
@@ -49,6 +50,12 @@
         </div>
       </div>
     </div>
+    <h2>
+      Swipe To the Right For Account Options
+    </h2>
+    <h2>
+      Swipe To the Left For Recent Transactions
+    </h2>
   </pane>
   <side-menu side="left">
     <header class="bar bar-header bar-assertive">
@@ -56,7 +63,7 @@
     </header>
     <content has-header="true">
       <ul class="list">
-        <a href="#" class="item" ng-repeat="item in options">
+        <a href="#" ng-click="item.action()" class="item" ng-repeat="item in options">
           {{item.text}}
         </a>
       </ul>
@@ -68,10 +75,14 @@
     </header>
     <content has-header="true">
       <ul class="list">
-        <a href="#" class="item" ng-repeat="item in transactions">
+        <li class="item" ng-repeat="item in currentUser.transactions">
           {{ item.pos }}<br />
-          <strong>{{ item.debit || item.credit }}</strong>
-        </a>
+          <strong>{{
+            (item.debit) ? "-" : ""
+          }}{{ (item.debit || item.credit) | currency }}</strong>
+          <br />
+          {{ item.time | date:'medium' }}
+        </li>
       </ul>
     </content>
   </side-menu>
