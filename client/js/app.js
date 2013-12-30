@@ -43,6 +43,7 @@ angular.module('starter', ['ionic', 'ngRoute', 'ngAnimate', 'starter.services', 
 .run(function($rootScope, $location) {
   $rootScope.$on("$routeChangeStart", function(event, next, current) {
     console.log('$rootScope.currentUserId', $rootScope.currentUserId);
+    console.log('$location.path()', $location.path());
     if(!$rootScope.currentUserId && $location.path() !== '/login') {
       $location.path("/login");
     }

@@ -1,21 +1,20 @@
 angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($rootScope, $scope, User, $location) {
-  $scope.title = 'Overview';
-
   $scope.currentUser = 
   $rootScope.currentUser = User.get({id: $rootScope.currentUserId}, function() {
-    console.log(arguments);
+    // success
   }, function() {
-    console.log('err', arguments);
+    console.log('User.get() err', arguments);
   });
 
   $scope.options = [
     {text: 'Logout', action: function() {
-      User.logout(function() {
+      User.logout({token: $rootScope.accessToken}, function() {
         $scope.currentUser = 
         $rootScope.currentUser =
-        $rootScope.accessToken = undefined;
+        $rootScope.currentUserId =
+        $rootScope.accessToken = null;
         $location.path('/');
       });
     }}

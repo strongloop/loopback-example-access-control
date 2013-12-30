@@ -38,31 +38,6 @@
           "permission": "DENY",
           "principalType": "ROLE",
           "principalId": "$everyone"
-        },
-        {
-          "accessType": "*",
-          "permission": "ALLOW",
-          "principalType": "ROLE",
-          "property": "login",
-          "principalId": "$everyone"
-        },
-        {
-          "permission": "ALLOW",
-          "property": "findById",
-          "principalType": "ROLE",
-          "principalId": "$owner"
-        },
-        {
-          "permission": "ALLOW",
-          "property": "updateAttributes",
-          "principalType": "ROLE",
-          "principalId": "$owner"
-        },
-        {
-          "permission": "ALLOW",
-          "property": "logout",
-          "principalType": "ROLE",
-          "principalId": "$everyone"
         }
       ]
     },

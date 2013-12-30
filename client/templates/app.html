@@ -1,8 +1,8 @@
 <side-menus>
-  <pane side-menu-content>
+  <pane side-menu-content scroll="true">
     <header class="bar bar-header bar-assertive">
       <button class="button button-icon" ng-click="toggleLeft()"><i class="icon ion-navicon"></i></button>
-      <h1 class="title">{{ title }}</h1>
+      <h1 class="title">Overview</h1>
     </header>
     <div class="content has-header">
       <div class="card">
@@ -23,7 +23,7 @@
       </div>
       <div class="card">
         <div class="item item-divider">
-          Cash Flow
+          Cash Flow (Past Month)
         </div>
         <div class="row">
           <div class="col">
@@ -32,7 +32,7 @@
                 <input type="range" name="volume" min="0" max="100" value="33">
               </div>
               <div class="col-33 col-center padding-left">
-                <strong>{{ (totalEarned || 0) | currency }}</strong> Earned
+                <strong>{{ (currentUser.totalEarned || 0) | currency }}</strong> Earned
               </div>
             </div>
             <div class="row">
@@ -40,22 +40,24 @@
                 <input type="range" name="volume" min="0" max="100" value="33">
               </div>
               <div class="col-33 col-center padding-left">
-                <strong>{{ (totalSpent || 0) | currency }}</strong> Spent
+                <strong>{{ (currentUser.totalSpent || 0) | currency }}</strong> Spent
               </div>
             </div>
           </div>
           <div class="col padding-left col-center">
-            <h2>{{ (cashFlow || 0) | currency }}</h2>
+            <h2>{{ ((currentUser.totalEarned - currentUser.totalSpent) || 0) | currency }}</h2>
           </div>
         </div>
       </div>
+      <div class="row">
+        <h4 class="col-50 col">
+        Swipe Right For Account Options <i class="icon ion-arrow-right-a"></i> 
+        </h4>
+        <h4 class="col-50 col" style="text-align: right">
+          <i class="icon ion-arrow-left-a"></i> Swipe Left For Recent Transactions
+        </h4>
+      </div>
     </div>
-    <h2>
-      Swipe To the Right For Account Options
-    </h2>
-    <h2>
-      Swipe To the Left For Recent Transactions
-    </h2>
   </pane>
   <side-menu side="left">
     <header class="bar bar-header bar-assertive">

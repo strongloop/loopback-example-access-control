@@ -4,6 +4,7 @@ var account = app.models.account;
 var transaction = app.models.transaction;
 var TOTAL_TRANS = 100;
 var ONE_YEAR = 1000 * 60 * 60 * 24 * 365;
+var ONE_MONTH = ONE_YEAR / 12;
 
 user.afterRemote('findById', function(ctx, user, next) {
   // override the result completely
@@ -15,10 +16,34 @@ user.afterRemote('findById', function(ctx, user, next) {
     result.lastName = user.lastName;
     result.transactions = transactions;
     result.balance = calculateBalance(transactions);
-    result.balance = calculateBalance(transactions);
-    next();
+
+    transaction.find({
+      where: {
+        userId: user.id,
+        time: {gt: Date.now() - ONE_MONTH}
+      }
+    }, function(err, transactions) {
+      result.totalEarned = transactions
+        .filter(is('credit'))
+        .reduce(sum, 0);
+      result.totalSpent = transactions
+        .filter(is('debit'))
+        .reduce(sum, 0);
+      next();
+    });
   });
 });
+
+function is(type) {
+  return function(transaction) {
+    return !! transaction[type];
+  }
+}
+
+function sum(prev, cur) {
+  prev += cur.debit || cur.credit;
+  return prev;
+}
 
 /*
  Calculate balance from an array of transactions
@@ -78,9 +103,10 @@ function generateTransactions(account, user, total) {
       transaction.debit = randDollarAmt(0, 999);
     } else {
       transaction.credit = randDollarAmt(0, 9999);
+      transaction.pos = 'Deposit into Checking'
     }
 
-    transaction.time = new Date(Date.now() - rand(0, ONE_YEAR));
+    transaction.time = Date.now() - rand(0, ONE_YEAR);
 
     transactions.push(transaction);
   }

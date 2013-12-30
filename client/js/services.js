@@ -7,7 +7,8 @@ angular.module('starter.services', ['ngResource'])
       },
       logout: {
         method: 'POST',
-        url: '/api/users/logout'
+        url: '/api/users/logout?sid=:token',
+        params: {token: '@token'}
       }
     });
   }])
