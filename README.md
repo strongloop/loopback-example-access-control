@@ -39,7 +39,7 @@ slc version
 Should print something similar to:
 
 ```
-slc v2.0.3 (node v0.10.9)
+slc v2.1.0 (node v0.10.22)
 ```
 
 ### 1. Create the application using the `slc` command line tool.
