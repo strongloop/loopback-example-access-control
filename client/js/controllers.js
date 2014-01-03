@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($rootScope, $scope, User, $location) {
-  $scope.currentUser = 
+  $scope.currentUser =
   $rootScope.currentUser = User.get({id: $rootScope.currentUserId}, function() {
     // success
   }, function() {
@@ -10,11 +10,10 @@ angular.module('starter.controllers', [])
 
   $scope.options = [
     {text: 'Logout', action: function() {
-      User.logout({token: $rootScope.accessToken}, function() {
-        $scope.currentUser = 
+      User.logout(function() {
+        $scope.currentUser =
         $rootScope.currentUser =
-        $rootScope.currentUserId =
-        $rootScope.accessToken = null;
+        $rootScope.currentUserId = null;
         $location.path('/');
       });
     }}
@@ -35,7 +34,6 @@ angular.module('starter.controllers', [])
   $scope.login = function() {
     $scope.loginResult = User.login($scope.credentials,
       function() {
-        $rootScope.accessToken = $scope.loginResult.id;
         $rootScope.currentUserId = $scope.loginResult.userId;
         $location.path('/');
       },
