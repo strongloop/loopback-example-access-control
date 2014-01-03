@@ -5,14 +5,14 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "loopback": "1.3.x"
+    "loopback": "1.x >=1.4.0"
   },
   "optionalDependencies": {
     "strong-cluster-control": "~0.1.0",
     "strong-agent": "~0.2.15",
-    "loopback-explorer": "~1.0.0"
+    "loopback-explorer": "1.x"
   },
   "devDependencies": {
-    "loopback-testing": "~0.0.2"
+    "loopback-testing": "0.x"
   }
 }
