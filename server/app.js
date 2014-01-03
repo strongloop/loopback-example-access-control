@@ -64,6 +64,10 @@ try {
   // ignore errors, explorer stays disabled
 }
 
+// TODO(bajtos) move the implementation to loopback or loopback-angular
+// Nice to have: move this initialization out to boot/ fold
+app.use('/angular-resources.js', require('./lib/angular-resources')(app, apiPath));
+
 /*
  * EXTENSION POINT
  * Add your custom request-handling middleware here.
