@@ -4,6 +4,10 @@
 
 ## How to install and run the Access Control example app:
 
+![](screenshots/screenshot-1.png?raw=true)
+![](screenshots/screenshot-2.png?raw=true)
+![](screenshots/screenshot-3.png?raw=true)
+
 ### Clone the project and install the server dependencies
 
 ```sh
