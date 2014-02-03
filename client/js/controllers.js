@@ -1,19 +1,11 @@
 angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($rootScope, $scope, User, $location) {
-  $scope.currentUser =
-  $rootScope.currentUser = User.get({id: $rootScope.currentUserId}, function() {
-    // success
-  }, function() {
-    console.log('User.get() err', arguments);
-  });
-
   $scope.options = [
     {text: 'Logout', action: function() {
       User.logout(function() {
         $scope.currentUser =
-        $rootScope.currentUser =
-        $rootScope.currentUserId = null;
+        $rootScope.currentUser = null;
         $location.path('/');
       });
     }}
@@ -32,10 +24,12 @@ angular.module('starter.controllers', [])
   };
 
   $scope.login = function() {
-    $scope.loginResult = User.login($scope.credentials,
+    $scope.loginResult = User.login({include: 'user', rememberMe: true}, $scope.credentials,
       function() {
-        $rootScope.currentUserId = $scope.loginResult.userId;
-        $location.path('/');
+        var next = $rootScope.nextAfterLogin || '/';
+        $rootScope.nextAfterLogin = null;
+        $rootScope.currentUser = $scope.loginResult.user;
+        $location.path(next);
       },
       function(res) {
         $scope.loginError = res.data.error;

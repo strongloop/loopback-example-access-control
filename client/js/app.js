@@ -9,7 +9,7 @@ angular.module('starter', ['ionic', 'ngRoute', 'ngAnimate', 'lbServices', 'start
   $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
 })
 
-.config(function($routeProvider, $locationProvider) {
+.config(function($routeProvider, $locationProvider, $httpProvider) {
 
   // Set up the initial routes that our app will respond to.
   // These are then tied up to our nav router which animates and
@@ -37,15 +37,38 @@ angular.module('starter', ['ionic', 'ngRoute', 'ngAnimate', 'lbServices', 'start
     redirectTo: '/home'
   });
 
+  // Intercept 401 responses and redirect to login screen
+  $httpProvider.interceptors.push(function($q, $location, $rootScope) {
+    return {
+      responseError: function(rejection) {
+        console.log('intercepted rejection of ', rejection.config.url, rejection.status);
+        if (rejection.status == 401) {
+          $rootScope.currentUser = null;
+          // save the current location so that login can redirect back
+          $rootScope.nextAfterLogin = $location.path();
+          $location.path('/login');
+        }
+        return $q.reject(rejection);
+      }
+    };
+  });
 })
 
-.run(function($rootScope, $location) {
+.run(function($rootScope, $location, User) {
   $rootScope.$on("$routeChangeStart", function(event, next, current) {
-    console.log('$rootScope.currentUserId', $rootScope.currentUserId);
-    console.log('$location.path()', $location.path());
-    if(!$rootScope.currentUserId && $location.path() !== '/login') {
-      $location.path("/login");
+    if ($rootScope.currentUser) {
+      console.log('Using cached current user.');
+    } else if ($location.path() != '/login') {
+      console.log('Fetching current user from the server.');
+      $rootScope.currentUser = User.getCurrent(function() {
+        // success
+      }, function(response) {
+        console.log('User.getCurrent() err', arguments);
+      });
     }
+
+    console.log('$rootScope.currentUser', $rootScope.currentUser);
+    console.log('$location.path()', $location.path());
   });
 });
 

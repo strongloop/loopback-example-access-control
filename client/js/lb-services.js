@@ -52,6 +52,10 @@ module.factory(
          *
          *  - `include` – `{string=}` - Related objects to include in the response. See the description of return value for more details.
          *
+         *  - `rememberMe` - `boolean` - Whether the authentication credentials
+         *     should be remembered in localStorage across app/browser restarts.
+         *     Default: `true`.
+         *
          * @param {Object} postData Request data.
          *
          * This method expects a subset of model properties as request parameters.
@@ -79,11 +83,13 @@ module.factory(
           interceptor: {
             response: function(response) {
               var accessToken = response.data;
+              LoopBackAuth.currentUserId = accessToken.userId;
               LoopBackAuth.accessTokenId = accessToken.id;
+              LoopBackAuth.rememberMe = response.config.params.rememberMe !== false;
+              LoopBackAuth.save();
               return response.resource;
             }
           }
-
         },
         /**
          * @ngdoc method
@@ -122,11 +128,12 @@ module.factory(
           method: "POST",
           interceptor: {
             response: function(response) {
+              LoopBackAuth.currentUserId = null;
               LoopBackAuth.accessTokenId = null;
+              LoopBackAuth.save();
               return response.resource;
             }
           }
-
         },
         /**
          * @ngdoc method
@@ -162,7 +169,6 @@ module.factory(
         "confirm": {
           url: urlBase + "/users/confirm",
           method: "GET",
-
         },
         /**
          * @ngdoc method
@@ -199,7 +205,6 @@ module.factory(
         "resetPassword": {
           url: urlBase + "/users/reset",
           method: "POST",
-
         },
         /**
          * @ngdoc method
@@ -236,7 +241,6 @@ module.factory(
         "email": {
           url: urlBase + "/users/Emails",
           method: "POST",
-
         },
         /**
          * @ngdoc method
@@ -273,7 +277,6 @@ module.factory(
         "accessToken": {
           url: urlBase + "/users/AccessTokens",
           method: "POST",
-
         },
         /**
          * @ngdoc method
@@ -311,7 +314,6 @@ module.factory(
         "create": {
           url: urlBase + "/users",
           method: "POST",
-
         },
         /**
          * @ngdoc method
@@ -349,7 +351,6 @@ module.factory(
         "updateOrCreate": {
           url: urlBase + "/users",
           method: "PUT",
-
         },
         /**
          * @ngdoc method
@@ -387,7 +388,6 @@ module.factory(
         "upsert": {
           url: urlBase + "/users",
           method: "PUT",
-
         },
         /**
          * @ngdoc method
@@ -419,7 +419,6 @@ module.factory(
         "exists": {
           url: urlBase + "/users/:id/exists",
           method: "GET",
-
         },
         /**
          * @ngdoc method
@@ -452,7 +451,6 @@ module.factory(
         "findById": {
           url: urlBase + "/users/:id",
           method: "GET",
-
         },
         /**
          * @ngdoc method
@@ -486,7 +484,6 @@ module.factory(
           url: urlBase + "/users",
           method: "GET",
           isArray: true,
-
         },
         /**
          * @ngdoc method
@@ -519,7 +516,6 @@ module.factory(
         "findOne": {
           url: urlBase + "/users/findOne",
           method: "GET",
-
         },
         /**
          * @ngdoc method
@@ -549,7 +545,6 @@ module.factory(
         "destroyById": {
           url: urlBase + "/users/:id",
           method: "DELETE",
-
         },
         /**
          * @ngdoc method
@@ -579,7 +574,6 @@ module.factory(
         "deleteById": {
           url: urlBase + "/users/:id",
           method: "DELETE",
-
         },
         /**
          * @ngdoc method
@@ -609,7 +603,6 @@ module.factory(
         "removeById": {
           url: urlBase + "/users/:id",
           method: "DELETE",
-
         },
         /**
          * @ngdoc method
@@ -641,7 +634,6 @@ module.factory(
         "count": {
           url: urlBase + "/users/count",
           method: "GET",
-
         },
         /**
          * @ngdoc method
@@ -679,7 +671,6 @@ module.factory(
         "prototype$updateAttributes": {
           url: urlBase + "/users/:id",
           method: "PUT",
-
         },
         /**
          * @ngdoc method
@@ -713,7 +704,6 @@ module.factory(
           url: urlBase + "/users/:id/accessTokens",
           method: "GET",
           isArray: true,
-
         },
         /**
          * @ngdoc method
@@ -751,7 +741,6 @@ module.factory(
         "prototype$__create__accessTokens": {
           url: urlBase + "/users/:id/accessTokens",
           method: "POST",
-
         },
         /**
          * @ngdoc method
@@ -785,7 +774,6 @@ module.factory(
         "prototype$__delete__accessTokens": {
           url: urlBase + "/users/:id/accessTokens",
           method: "DELETE",
-
         },
         /**
          * @ngdoc method
@@ -819,7 +807,6 @@ module.factory(
           url: urlBase + "/users/:id/transactions",
           method: "GET",
           isArray: true,
-
         },
         /**
          * @ngdoc method
@@ -857,7 +844,6 @@ module.factory(
         "prototype$__create__transactions": {
           url: urlBase + "/users/:id/transactions",
           method: "POST",
-
         },
         /**
          * @ngdoc method
@@ -891,8 +877,40 @@ module.factory(
         "prototype$__delete__transactions": {
           url: urlBase + "/users/:id/transactions",
           method: "DELETE",
-
         },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User#getCurrent
+         * @methodOf lbServices.User
+         *
+         * @description
+         *
+         * Get data of the currently logged user. Fail with HTTP result 401
+         * when there is no user logged in.
+         *
+         * @param {Function(Object, Object)=} successCb
+         *    Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {Function(Object)=} errorCb Error callback with one argument:
+         *    `httpResponse`.
+         *
+         * @return {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         */
+        "getCurrent": {
+          url: urlBase + "/users/:id",
+          method: "GET",
+          params: {
+            id: function() {
+             var id = LoopBackAuth.currentUserId;
+             if (id == null) id = '__anonymous__';
+             return id;
+           }
+          },
+          __isGetCurrentUser__ : true
+        }
       }
     );
   }]);
@@ -956,7 +974,6 @@ module.factory(
         "create": {
           url: urlBase + "/accessTokens",
           method: "POST",
-
         },
         /**
          * @ngdoc method
@@ -994,7 +1011,6 @@ module.factory(
         "updateOrCreate": {
           url: urlBase + "/accessTokens",
           method: "PUT",
-
         },
         /**
          * @ngdoc method
@@ -1032,7 +1048,6 @@ module.factory(
         "upsert": {
           url: urlBase + "/accessTokens",
           method: "PUT",
-
         },
         /**
          * @ngdoc method
@@ -1064,7 +1079,6 @@ module.factory(
         "exists": {
           url: urlBase + "/accessTokens/:id/exists",
           method: "GET",
-
         },
         /**
          * @ngdoc method
@@ -1097,7 +1111,6 @@ module.factory(
         "findById": {
           url: urlBase + "/accessTokens/:id",
           method: "GET",
-
         },
         /**
          * @ngdoc method
@@ -1131,7 +1144,6 @@ module.factory(
           url: urlBase + "/accessTokens",
           method: "GET",
           isArray: true,
-
         },
         /**
          * @ngdoc method
@@ -1164,7 +1176,6 @@ module.factory(
         "findOne": {
           url: urlBase + "/accessTokens/findOne",
           method: "GET",
-
         },
         /**
          * @ngdoc method
@@ -1194,7 +1205,6 @@ module.factory(
         "destroyById": {
           url: urlBase + "/accessTokens/:id",
           method: "DELETE",
-
         },
         /**
          * @ngdoc method
@@ -1224,7 +1234,6 @@ module.factory(
         "deleteById": {
           url: urlBase + "/accessTokens/:id",
           method: "DELETE",
-
         },
         /**
          * @ngdoc method
@@ -1254,7 +1263,6 @@ module.factory(
         "removeById": {
           url: urlBase + "/accessTokens/:id",
           method: "DELETE",
-
         },
         /**
          * @ngdoc method
@@ -1286,7 +1294,6 @@ module.factory(
         "count": {
           url: urlBase + "/accessTokens/count",
           method: "GET",
-
         },
         /**
          * @ngdoc method
@@ -1324,7 +1331,6 @@ module.factory(
         "prototype$updateAttributes": {
           url: urlBase + "/accessTokens/:id",
           method: "PUT",
-
         },
       }
     );
@@ -1389,7 +1395,6 @@ module.factory(
         "create": {
           url: urlBase + "/banks",
           method: "POST",
-
         },
         /**
          * @ngdoc method
@@ -1427,7 +1432,6 @@ module.factory(
         "updateOrCreate": {
           url: urlBase + "/banks",
           method: "PUT",
-
         },
         /**
          * @ngdoc method
@@ -1465,7 +1469,6 @@ module.factory(
         "upsert": {
           url: urlBase + "/banks",
           method: "PUT",
-
         },
         /**
          * @ngdoc method
@@ -1497,7 +1500,6 @@ module.factory(
         "exists": {
           url: urlBase + "/banks/:id/exists",
           method: "GET",
-
         },
         /**
          * @ngdoc method
@@ -1530,7 +1532,6 @@ module.factory(
         "findById": {
           url: urlBase + "/banks/:id",
           method: "GET",
-
         },
         /**
          * @ngdoc method
@@ -1564,7 +1565,6 @@ module.factory(
           url: urlBase + "/banks",
           method: "GET",
           isArray: true,
-
         },
         /**
          * @ngdoc method
@@ -1597,7 +1597,6 @@ module.factory(
         "findOne": {
           url: urlBase + "/banks/findOne",
           method: "GET",
-
         },
         /**
          * @ngdoc method
@@ -1627,7 +1626,6 @@ module.factory(
         "destroyById": {
           url: urlBase + "/banks/:id",
           method: "DELETE",
-
         },
         /**
          * @ngdoc method
@@ -1657,7 +1655,6 @@ module.factory(
         "deleteById": {
           url: urlBase + "/banks/:id",
           method: "DELETE",
-
         },
         /**
          * @ngdoc method
@@ -1687,7 +1684,6 @@ module.factory(
         "removeById": {
           url: urlBase + "/banks/:id",
           method: "DELETE",
-
         },
         /**
          * @ngdoc method
@@ -1719,7 +1715,6 @@ module.factory(
         "count": {
           url: urlBase + "/banks/count",
           method: "GET",
-
         },
         /**
          * @ngdoc method
@@ -1757,7 +1752,6 @@ module.factory(
         "prototype$updateAttributes": {
           url: urlBase + "/banks/:id",
           method: "PUT",
-
         },
         /**
          * @ngdoc method
@@ -1791,7 +1785,6 @@ module.factory(
           url: urlBase + "/banks/:id/users",
           method: "GET",
           isArray: true,
-
         },
         /**
          * @ngdoc method
@@ -1829,7 +1822,6 @@ module.factory(
         "prototype$__create__users": {
           url: urlBase + "/banks/:id/users",
           method: "POST",
-
         },
         /**
          * @ngdoc method
@@ -1863,7 +1855,6 @@ module.factory(
         "prototype$__delete__users": {
           url: urlBase + "/banks/:id/users",
           method: "DELETE",
-
         },
         /**
          * @ngdoc method
@@ -1897,7 +1888,6 @@ module.factory(
           url: urlBase + "/banks/:id/accounts",
           method: "GET",
           isArray: true,
-
         },
         /**
          * @ngdoc method
@@ -1935,7 +1925,6 @@ module.factory(
         "prototype$__create__accounts": {
           url: urlBase + "/banks/:id/accounts",
           method: "POST",
-
         },
         /**
          * @ngdoc method
@@ -1969,7 +1958,6 @@ module.factory(
         "prototype$__delete__accounts": {
           url: urlBase + "/banks/:id/accounts",
           method: "DELETE",
-
         },
       }
     );
@@ -2034,7 +2022,6 @@ module.factory(
         "create": {
           url: urlBase + "/accounts",
           method: "POST",
-
         },
         /**
          * @ngdoc method
@@ -2072,7 +2059,6 @@ module.factory(
         "updateOrCreate": {
           url: urlBase + "/accounts",
           method: "PUT",
-
         },
         /**
          * @ngdoc method
@@ -2110,7 +2096,6 @@ module.factory(
         "upsert": {
           url: urlBase + "/accounts",
           method: "PUT",
-
         },
         /**
          * @ngdoc method
@@ -2142,7 +2127,6 @@ module.factory(
         "exists": {
           url: urlBase + "/accounts/:id/exists",
           method: "GET",
-
         },
         /**
          * @ngdoc method
@@ -2175,7 +2159,6 @@ module.factory(
         "findById": {
           url: urlBase + "/accounts/:id",
           method: "GET",
-
         },
         /**
          * @ngdoc method
@@ -2209,7 +2192,6 @@ module.factory(
           url: urlBase + "/accounts",
           method: "GET",
           isArray: true,
-
         },
         /**
          * @ngdoc method
@@ -2242,7 +2224,6 @@ module.factory(
         "findOne": {
           url: urlBase + "/accounts/findOne",
           method: "GET",
-
         },
         /**
          * @ngdoc method
@@ -2272,7 +2253,6 @@ module.factory(
         "destroyById": {
           url: urlBase + "/accounts/:id",
           method: "DELETE",
-
         },
         /**
          * @ngdoc method
@@ -2302,7 +2282,6 @@ module.factory(
         "deleteById": {
           url: urlBase + "/accounts/:id",
           method: "DELETE",
-
         },
         /**
          * @ngdoc method
@@ -2332,7 +2311,6 @@ module.factory(
         "removeById": {
           url: urlBase + "/accounts/:id",
           method: "DELETE",
-
         },
         /**
          * @ngdoc method
@@ -2364,7 +2342,6 @@ module.factory(
         "count": {
           url: urlBase + "/accounts/count",
           method: "GET",
-
         },
         /**
          * @ngdoc method
@@ -2402,7 +2379,6 @@ module.factory(
         "prototype$updateAttributes": {
           url: urlBase + "/accounts/:id",
           method: "PUT",
-
         },
         /**
          * @ngdoc method
@@ -2436,7 +2412,6 @@ module.factory(
           url: urlBase + "/accounts/:id/transactions",
           method: "GET",
           isArray: true,
-
         },
         /**
          * @ngdoc method
@@ -2474,7 +2449,6 @@ module.factory(
         "prototype$__create__transactions": {
           url: urlBase + "/accounts/:id/transactions",
           method: "POST",
-
         },
         /**
          * @ngdoc method
@@ -2508,7 +2482,6 @@ module.factory(
         "prototype$__delete__transactions": {
           url: urlBase + "/accounts/:id/transactions",
           method: "DELETE",
-
         },
       }
     );
@@ -2573,7 +2546,6 @@ module.factory(
         "create": {
           url: urlBase + "/transactions",
           method: "POST",
-
         },
         /**
          * @ngdoc method
@@ -2611,7 +2583,6 @@ module.factory(
         "updateOrCreate": {
           url: urlBase + "/transactions",
           method: "PUT",
-
         },
         /**
          * @ngdoc method
@@ -2649,7 +2620,6 @@ module.factory(
         "upsert": {
           url: urlBase + "/transactions",
           method: "PUT",
-
         },
         /**
          * @ngdoc method
@@ -2681,7 +2651,6 @@ module.factory(
         "exists": {
           url: urlBase + "/transactions/:id/exists",
           method: "GET",
-
         },
         /**
          * @ngdoc method
@@ -2714,7 +2683,6 @@ module.factory(
         "findById": {
           url: urlBase + "/transactions/:id",
           method: "GET",
-
         },
         /**
          * @ngdoc method
@@ -2748,7 +2716,6 @@ module.factory(
           url: urlBase + "/transactions",
           method: "GET",
           isArray: true,
-
         },
         /**
          * @ngdoc method
@@ -2781,7 +2748,6 @@ module.factory(
         "findOne": {
           url: urlBase + "/transactions/findOne",
           method: "GET",
-
         },
         /**
          * @ngdoc method
@@ -2811,7 +2777,6 @@ module.factory(
         "destroyById": {
           url: urlBase + "/transactions/:id",
           method: "DELETE",
-
         },
         /**
          * @ngdoc method
@@ -2841,7 +2806,6 @@ module.factory(
         "deleteById": {
           url: urlBase + "/transactions/:id",
           method: "DELETE",
-
         },
         /**
          * @ngdoc method
@@ -2871,7 +2835,6 @@ module.factory(
         "removeById": {
           url: urlBase + "/transactions/:id",
           method: "DELETE",
-
         },
         /**
          * @ngdoc method
@@ -2903,7 +2866,6 @@ module.factory(
         "count": {
           url: urlBase + "/transactions/count",
           method: "GET",
-
         },
         /**
          * @ngdoc method
@@ -2941,7 +2903,6 @@ module.factory(
         "prototype$updateAttributes": {
           url: urlBase + "/transactions/:id",
           method: "PUT",
-
         },
       }
     );
@@ -3006,7 +2967,6 @@ module.factory(
         "create": {
           url: urlBase + "/alerts",
           method: "POST",
-
         },
         /**
          * @ngdoc method
@@ -3044,7 +3004,6 @@ module.factory(
         "updateOrCreate": {
           url: urlBase + "/alerts",
           method: "PUT",
-
         },
         /**
          * @ngdoc method
@@ -3082,7 +3041,6 @@ module.factory(
         "upsert": {
           url: urlBase + "/alerts",
           method: "PUT",
-
         },
         /**
          * @ngdoc method
@@ -3114,7 +3072,6 @@ module.factory(
         "exists": {
           url: urlBase + "/alerts/:id/exists",
           method: "GET",
-
         },
         /**
          * @ngdoc method
@@ -3147,7 +3104,6 @@ module.factory(
         "findById": {
           url: urlBase + "/alerts/:id",
           method: "GET",
-
         },
         /**
          * @ngdoc method
@@ -3181,7 +3137,6 @@ module.factory(
           url: urlBase + "/alerts",
           method: "GET",
           isArray: true,
-
         },
         /**
          * @ngdoc method
@@ -3214,7 +3169,6 @@ module.factory(
         "findOne": {
           url: urlBase + "/alerts/findOne",
           method: "GET",
-
         },
         /**
          * @ngdoc method
@@ -3244,7 +3198,6 @@ module.factory(
         "destroyById": {
           url: urlBase + "/alerts/:id",
           method: "DELETE",
-
         },
         /**
          * @ngdoc method
@@ -3274,7 +3227,6 @@ module.factory(
         "deleteById": {
           url: urlBase + "/alerts/:id",
           method: "DELETE",
-
         },
         /**
          * @ngdoc method
@@ -3304,7 +3256,6 @@ module.factory(
         "removeById": {
           url: urlBase + "/alerts/:id",
           method: "DELETE",
-
         },
         /**
          * @ngdoc method
@@ -3336,7 +3287,6 @@ module.factory(
         "count": {
           url: urlBase + "/alerts/count",
           method: "GET",
-
         },
         /**
          * @ngdoc method
@@ -3374,7 +3324,6 @@ module.factory(
         "prototype$updateAttributes": {
           url: urlBase + "/alerts/:id",
           method: "PUT",
-
         },
       }
     );
@@ -3383,9 +3332,36 @@ module.factory(
 
 module
   .factory('LoopBackAuth', function() {
-    return {
-      accessTokenId: null
+    var props = ['accessTokenId', 'currentUserId'];
+
+    function LoopBackAuth() {
+      props.forEach(function(name) {
+        this[name] = load(name);
+      }.bind(this));
+      this.rememberMe = undefined;
+    }
+
+    LoopBackAuth.prototype.save = function() {
+      var storage = this.rememberMe ? localStorage : sessionStorage;
+      props.forEach(function(name) {
+        save(storage, name, this[name]);
+      }.bind(this));
     };
+
+    return new LoopBackAuth();
+
+    // Note: LocalStorage converts the value to string
+    // We are using empty string as a marker for null/undefined values.
+    function save(storage, name, value) {
+      var key = '$LoopBack$' + name;
+      if (value == null) value = '';
+      storage[key] = value;
+    }
+
+    function load(name) {
+      var key = '$LoopBack$' + name;
+      return localStorage[key] || sessionStorage[key] || null;
+    }
   })
   .config(function($httpProvider) {
     $httpProvider.interceptors.push('LoopBackAuthRequestInterceptor');
@@ -3396,6 +3372,16 @@ module
         'request': function(config) {
           if (LoopBackAuth.accessTokenId) {
             config.headers.authorization = LoopBackAuth.accessTokenId;
+          } else if (config.__isGetCurrentUser__) {
+            // Return a stub 401 error for User.getCurrent() when
+            // there is no user logged in
+            var res = {
+              body: { error: { status: 401 } },
+              status: 401,
+              config: config,
+              headers: function() { return undefined; }
+            };
+            return $q.reject(res);
           }
           return config || $q.when(config);
         }
