@@ -1,11 +1,14 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['starter.services'])
 
-.controller('AppCtrl', function($rootScope, $scope, User, $location) {
-  $scope.options = [
+.controller('AppCtrl', function($scope, User, $location, AppAuth) {
+    AppAuth.ensureHasCurrentUser(User);
+    $scope.currentUser = AppAuth.currentUser;
+
+    $scope.options = [
     {text: 'Logout', action: function() {
       User.logout(function() {
         $scope.currentUser =
-        $rootScope.currentUser = null;
+        AppAuth.currentUser = null;
         $location.path('/');
       });
     }}
@@ -16,7 +19,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('LoginCtrl', function($rootScope, $scope, $routeParams, User, $location) {
+.controller('LoginCtrl', function($scope, $routeParams, User, $location, AppAuth) {
   $scope.registration = {};
   $scope.credentials = {
     email: 'foo@bar.com',
@@ -26,9 +29,9 @@ angular.module('starter.controllers', [])
   $scope.login = function() {
     $scope.loginResult = User.login({include: 'user', rememberMe: true}, $scope.credentials,
       function() {
-        var next = $rootScope.nextAfterLogin || '/';
-        $rootScope.nextAfterLogin = null;
-        $rootScope.currentUser = $scope.loginResult.user;
+        var next = $location.nextAfterLogin || '/';
+        $location.nextAfterLogin = null;
+        AppAuth.currentUser = $scope.loginResult.user;
         $location.path(next);
       },
       function(res) {

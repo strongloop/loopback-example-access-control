@@ -2,7 +2,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array or 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'ngRoute', 'ngAnimate', 'lbServices', 'starter.controllers'])
+angular.module('starter', ['ionic', 'ngRoute', 'ngAnimate', 'lbServices', 'starter.services', 'starter.controllers'])
 
 .config(function ($compileProvider){
   // Needed for routing to work
@@ -38,14 +38,14 @@ angular.module('starter', ['ionic', 'ngRoute', 'ngAnimate', 'lbServices', 'start
   });
 
   // Intercept 401 responses and redirect to login screen
-  $httpProvider.interceptors.push(function($q, $location, $rootScope) {
+  $httpProvider.interceptors.push(function($q, $location, AppAuth) {
     return {
       responseError: function(rejection) {
         console.log('intercepted rejection of ', rejection.config.url, rejection.status);
         if (rejection.status == 401) {
-          $rootScope.currentUser = null;
+          AppAuth.currentUser = null;
           // save the current location so that login can redirect back
-          $rootScope.nextAfterLogin = $location.path();
+          $location.nextAfterLogin = $location.path();
           $location.path('/login');
         }
         return $q.reject(rejection);
@@ -54,20 +54,9 @@ angular.module('starter', ['ionic', 'ngRoute', 'ngAnimate', 'lbServices', 'start
   });
 })
 
-.run(function($rootScope, $location, User) {
+.run(function($rootScope, $location, AppAuth) {
   $rootScope.$on("$routeChangeStart", function(event, next, current) {
-    if ($rootScope.currentUser) {
-      console.log('Using cached current user.');
-    } else if ($location.path() != '/login') {
-      console.log('Fetching current user from the server.');
-      $rootScope.currentUser = User.getCurrent(function() {
-        // success
-      }, function(response) {
-        console.log('User.getCurrent() err', arguments);
-      });
-    }
-
-    console.log('$rootScope.currentUser', $rootScope.currentUser);
+    console.log('AppAuth.currentUser', AppAuth.currentUser);
     console.log('$location.path()', $location.path());
   });
 });
