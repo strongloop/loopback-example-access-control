@@ -1,20 +1,14 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['starter.services'])
 
-.controller('AppCtrl', function($rootScope, $scope, User, $location) {
-  $scope.currentUser = 
-  $rootScope.currentUser = User.get({id: $rootScope.currentUserId}, function() {
-    // success
-  }, function() {
-    console.log('User.get() err', arguments);
-  });
+.controller('AppCtrl', function($scope, User, $location, AppAuth) {
+    AppAuth.ensureHasCurrentUser(User);
+    $scope.currentUser = AppAuth.currentUser;
 
-  $scope.options = [
+    $scope.options = [
     {text: 'Logout', action: function() {
-      User.logout({token: $rootScope.accessToken}, function() {
-        $scope.currentUser = 
-        $rootScope.currentUser =
-        $rootScope.currentUserId =
-        $rootScope.accessToken = null;
+      User.logout(function() {
+        $scope.currentUser =
+        AppAuth.currentUser = null;
         $location.path('/');
       });
     }}
@@ -25,7 +19,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('LoginCtrl', function($rootScope, $scope, $routeParams, User, $location) {
+.controller('LoginCtrl', function($scope, $routeParams, User, $location, AppAuth) {
   $scope.registration = {};
   $scope.credentials = {
     email: 'foo@bar.com',
@@ -33,11 +27,12 @@ angular.module('starter.controllers', [])
   };
 
   $scope.login = function() {
-    $scope.loginResult = User.login($scope.credentials,
+    $scope.loginResult = User.login({include: 'user', rememberMe: true}, $scope.credentials,
       function() {
-        $rootScope.accessToken = $scope.loginResult.id;
-        $rootScope.currentUserId = $scope.loginResult.userId;
-        $location.path('/');
+        var next = $location.nextAfterLogin || '/';
+        $location.nextAfterLogin = null;
+        AppAuth.currentUser = $scope.loginResult.user;
+        $location.path(next);
       },
       function(res) {
         $scope.loginError = res.data.error;

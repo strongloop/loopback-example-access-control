@@ -1,28 +1,22 @@
-angular.module('starter.services', ['ngResource'])
-  .factory('User', ['$resource', function($resource) {
-    return $resource('/api/users/:id', {id: '@id'}, {
-      login: {
-        method: 'POST',
-        url: '/api/users/login'
-      },
-      logout: {
-        method: 'POST',
-        url: '/api/users/logout?sid=:token',
-        params: {token: '@token'}
-      }
-    });
-  }])
-  .config(function ($httpProvider) {
-    $httpProvider.interceptors.push('requestInterceptor');
-  })
-  .factory('requestInterceptor', function ($q, $rootScope) {
+angular.module('starter.services', ['lbServices'])
+  .factory('AppAuth', function() {
     return {
-           'request': function (config) {
-                console.log('config', config);
-                if($rootScope.accessToken) {
-                  config.headers.authorization = $rootScope.accessToken;
-                }
-                return config || $q.when(config);
-            }
+      currentUser: null,
+
+      // Note: we can't make the User a dependency of AppAuth
+      // because that would create a circular dependency
+      //   AppAuth <- $http <- $resource <- LoopBackResource <- User <- AppAuth
+      ensureHasCurrentUser: function(User) {
+        if (this.currentUser) {
+          console.log('Using cached current user.');
+        } else {
+          console.log('Fetching current user from the server.');
+          this.currentUser = User.getCurrent(function() {
+            // success
+          }, function(response) {
+            console.log('User.getCurrent() err', arguments);
+          });
         }
-    });
+      }
+    }
+  });
