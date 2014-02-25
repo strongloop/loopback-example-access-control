@@ -1,7 +1,5 @@
 # Loopback Examples: Access Control
 
-> **This Example is a Work in Progress**
-
 ## How to install and run the Access Control example app:
 
 ![](screenshots/screenshot-1.png?raw=true)
