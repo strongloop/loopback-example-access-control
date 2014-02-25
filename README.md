@@ -114,7 +114,7 @@ slc lb acl --all-models --deny --everyone
 
 ```sh
 slc lb acl --allow --everyone --read --model bank
-slc lb acl --allow --everyone --call create --model user
+slc lb acl --allow --everyone --method create --model user
 slc lb acl --allow --owner --all --model user
 slc lb acl --allow --owner --read --model account
 slc lb acl --allow --owner --write --model account
