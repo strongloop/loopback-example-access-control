@@ -1,22 +1,6 @@
 var loopback = require('loopback');
 var path = require('path');
 var app = module.exports = loopback();
-var started = new Date();
-
-// operational dependencies
-try {
-  require('strong-agent').profile();
-  var control = require('strong-cluster-control');
-  var clusterOptions = control.loadOptions();
-} catch(e) {
-  console.log('Could not load operational dependencies:');
-  console.log(e);
-}
-
-// if configured as a cluster master, just start controller
-if(clusterOptions.clustered && clusterOptions.isMaster) {
-  return control.start(clusterOptions);
-}
 
 /*
  * 1. Configure LoopBack models and datasources
