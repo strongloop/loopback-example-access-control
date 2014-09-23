@@ -1,194 +1,115 @@
-# Loopback Examples: Access Control
+##Overview
+This example demonstrates [access control](http://docs.strongloop.com/display/LB/Authentication+and+authorization) in [LoopBack](http://loopback.io).
 
-## How to install and run the Access Control example app:
+##Prerequisites
 
-![](screenshots/screenshot-1.png?raw=true)
-![](screenshots/screenshot-2.png?raw=true)
-![](screenshots/screenshot-3.png?raw=true)
+Before starting, make sure you've followed [Getting Started with LoopBack](http://docs.strongloop.com/display/LB/Getting+started+with+LoopBack) to install Node and LoopBack. You will also need a basic understanding  of [LoopBack models](http://docs.strongloop.com/display/LB/Working+with+models).
 
-### Clone the project and install the server dependencies
+##Procedure
 
-```sh
-git clone git@github.com:strongloop/loopback-example-access-control.git
-cd loopback-example-access-control/server
-npm install
+Follow the steps below to create the application from scratch.  Doing this will give you a better understanding
+of how to implement access control in your own app.
+
+Otherwise, if you just want to see the example in action, do this:
+
+```shell
+$ git clone https://github.com/strongloop/loopback-example-access-control.git
+$ cd loopback-example-access-control
+$ npm install
+$ slc run
 ```
 
-### Run the app
+1. **Create the app**.
 
-> **Make sure you are in the server directory!**
+  Run `slc loopback`, and name the app `loopback-example-access-control`.
 
-```sh
-node app
+2. **Create the account model**.
+
+  Run `slc loopback:model account` to create the *account* model. Expose the model via REST, leave the default plural form and give it the following properties:
+
+  |Property name|Property type|Required|
+  |:-:|:-:|:-:|
+  |id|Number|Yes|
+  |type|String|Yes|
+
+3. **Add accounts**.
+
+  Copy the [`add-accounts.js`](/server/boot/add-accounts.js) script to `server/boot` to add accounts.
+
+4. **Verify accounts exist**.
+
+  Run `curl localhost:3000/api/accounts`. You will see:
+  ```shell
+...
+[{"id":1,"type":"chequing"},{"id":2,"type":"savings"}]
+...
 ```
 
-## How to build the Access Control example app:
+  There are two accounts, *checking* and *savings*. Notice you have full access to all [predefined remote methods](http://docs.strongloop.com/display/LB/Exposing+models+over+a+REST+API#ExposingmodelsoveraRESTAPI-Predefinedremotemethods) by default.
 
-### 0. Make sure you have `slc` version **>= 2.1.0**.
+  >**NOTE**:You can add `app.set('json spaces', 2)` in `server/server.js` to get pretty printed output. In that case, you will see this instead:
 
-To install the latest version of `slc`:
-
-```sh
-npm install strong-cli -g
-```
-
-To check your version of `slc`:
-
-```sh
-slc version
-```
-
-Should print something similar to:
-
-```
-slc v2.1.0 (node v0.10.22)
-```
-
-### 1. Create the application using the `slc` command line tool.
-
-```sh
-mkdir -p access-control/client
-cd access-control
-slc lb project server
-```
-
-### 2. Define a `Bank` model to store a set of `Bank`s in the database.
-
-```sh
-cd server
-slc lb model bank
-```
-
-### 3. Define an `Account` model to store user's bank accounts.
-
-```sh
-slc lb model account
-```
-
-### 4. Define a `Transaction` model to store user transactions.
-
-```sh
-slc lb model transaction
-```
-
-### 5. Setup relations between banks / accounts / users and transactions.
-
-> See the [models.json](https://github.com/strongloop/loopback-example-access-control/blob/master/server/models.json#L20) file for the relations. Below is an example.
-
-```JSON
-
-  ...
-
-  "user": {
-    "options": {
-      "base": "User",
-      "relations": {
-        "accessTokens": {
-          "model": "accessToken",
-          "type": "hasMany",
-          "foreignKey": "userId"
-        },
-        "account": {
-          "model": "account",
-          "type": "belongsTo"
-        },
-        "transactions": {
-          "model": "transaction",
-          "type": "hasMany"
-        }
-      },
-
-  ...
-
-```
-
-### 6. Secure all the APIs.
-
-```sh
-slc lb acl --all-models --deny --everyone
-```
-
-### 7. Open up specific APIs
-
-```sh
-slc lb acl --allow --everyone --read --model bank
-slc lb acl --allow --everyone --method create --model user
-slc lb acl --allow --owner --all --model user
-slc lb acl --allow --owner --read --model account
-slc lb acl --allow --owner --write --model account
-```
-
-### 8. Define the angular services for intergrating with LoopBack.
-
-[See the actual source](https://github.com/strongloop/loopback-example-access-control/blob/master/client/js/services.js). Below is a basic example.
-
-```js
-// in client/js/services.js
-angular.module('starter.services', ['ngResource'])
-  .factory('User', ['$resource', function($resource) {
-    return $resource('/api/users/:id', {id: '@id'}, {
-      login: {
-        method: 'POST',
-        url: '/api/users/login'
-      },
-      logout: {
-        method: 'POST',
-        url: '/api/users/logout'
-      }
-    });
-  }])
-  .config(function ($httpProvider) {
-    $httpProvider.interceptors.push('requestInterceptor');
-  })
-  .factory('requestInterceptor', function ($q, $rootScope) {
-    return {
-           'request': function (config) {
-                console.log('config', config);
-                if($rootScope.accessToken) {
-                  config.headers.authorization = $rootScope.accessToken;
-                }
-                return config || $q.when(config);
-            }
-        }
-    });
-```
-
-### 9. Create an Angular Controller for logging in and registering users.
-
-[See the full source](https://github.com/strongloop/loopback-example-access-control/blob/master/client/js/controllers.js#L29). Below is a basic login / register controller.
-
-```js
-.controller('LoginCtrl', function($rootScope, $scope, $routeParams, User, $location) {
-  $scope.registration = {};
-  $scope.credentials = {};
-
-  $scope.login = function() {
-    $scope.loginResult = User.login($scope.credentials,
-      function() {
-        $rootScope.accessToken = $scope.loginResult.id;
-        $rootScope.currentUserId = $scope.loginResult.userId;
-        $location.path('/');
-      },
-      function(res) {
-        $scope.loginError = res.data.error;
-      }
-    );
+  ```shell
+...
+[
+  {
+    "id": 1,
+    "type": "chequing"
+  },
+  {
+    "id": 2,
+    "type": "savings"
   }
-
-  $scope.register = function() {
-    $scope.user = User.save($scope.registration,
-      function() {
-        // success
-      },
-      function(res) {
-        $scope.registerError = res.data.error;
-      }
-    );
-  }
-});
+]
+...
 ```
 
-### 10. Implement the application views and controllers.
+5. **Restrict access to all resources via ACL**.
 
- - [See the source for angular controllers](https://github.com/strongloop/loopback-example-access-control/blob/master/client/js/controllers.js)
- - [See the source for angular views / templates](https://github.com/strongloop/loopback-example-access-control/tree/master/client/templates)
+  Run `slc loopback:acl` to create an ACL with the following properties:
+   ```shell
+...
+[?] Select the model to apply the ACL entry to: account
+[?] Select the ACL scope: All methods and properties
+[?] Select the access type: All (match all types)
+[?] Select the role: All users
+[?] Select the permission to apply: Explicitly deny access
+...
+```
+
+  This ACL denies access to all [remote methods](http://docs.strongloop.com/display/LB/Exposing+models+over+a+REST+API#ExposingmodelsoveraRESTAPI-Predefinedremotemethods) for all users.
+
+  > **NOTE**: Each access type refers to a set of resources. For example, the *read* access type applies to the following remote methods: create, upsert, exists, findById, etc. See the [access type documentation](http://docs.strongloop.com/display/LB/Controlling+data+access#Controllingdataaccess-Useraccesstypes) for more information.
+
+6. **Test the ACL**.
+
+  Run `curl localhost:3000/api/accounts` and you should see:
+  ```shell
+...
+{"error":{"name":"Error","status":401,"message":"Authorization Required","statusCode":401,"stack":"Error: Authorization Required\n    at ...}}
+...
+```
+  As you can see, the app denies access to the resource.
+
+7. **Allow a specific remote method**.
+
+  Run `slc loopback:acl` and apply the following:
+  ```shell
+[?] Select the model to apply the ACL entry to: account
+[?] Select the ACL scope: A single method
+[?] Enter the method name: find
+[?] Select the access type: All (match all types)
+[?] Select the role: All users
+[?] Select the permission to apply: Explicitly grant access
+```
+
+  This enables you to retrieve accounts again. Run `curl localhost:3000/api/accounts` and you'll see this again:
+  ```shell
+...
+[{"id":1,"type":"chequing"},{"id":2,"type":"savings"}]
+...
+```
+
+##More information
+
+For more information, see the [ACL documentation](http://docs.strongloop.com/display/LB/Authentication+and+authorization).
