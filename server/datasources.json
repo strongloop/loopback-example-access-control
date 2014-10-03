@@ -1,10 +1,7 @@
 {
   "db": {
-    "defaultForType": "db",
-    "connector": "memory"
-  },
-  "mail": {
-    "defaultForType": "mail",
-    "connector": "mail"
+    "name": "db",
+    "connector": "memory",
+    "file": "db.json"
   }
 }

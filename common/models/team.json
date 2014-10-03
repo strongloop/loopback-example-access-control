@@ -1,0 +1,24 @@
+{
+  "name": "team",
+  "base": "PersistedModel",
+  "properties": {
+    "ownerId": {
+      "type": "number",
+      "required": true
+    },
+    "memberId": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "members": {
+      "type": "hasMany",
+      "model": "user",
+      "foreignKey": "memberId"
+    }
+  },
+  "acls": [],
+  "methods": []
+}

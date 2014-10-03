@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>LoopBack example access control</title>
+  </head>
+  <body>
+  <h1>Projects.com<% if (typeof email !== 'undefined') { %> - Welcome <%=
+      email %><% } %></h1>
+    <table border=1 cellpadding=5>
+      <tr>
+        <th>Function</th>
+        <th>Description</th>
+        <th>Endpoint</th>
+        <th>Permissions</th>
+        <th>Roles</th>
+        <th>Information</th>
+      </tr>
+      <tr>
+        <td><a href="/api/projects/list-projects">List projects</a></td>
+        <td>Anyone can list project information (without balance)</td>
+        <td>GET /api/projects/list-projects</td>
+        <td>$everyone, $unauthenticated, $authenticated</td>
+        <td>Guest, owner, team member, administrator</td>
+        <td>This endpoint is a remote method with a static ACL set to allow
+            access for all users (using the built-in role $everyone).</td>
+      </tr>
+      <tr>
+        <td><a href="/api/projects<% if (typeof accessToken !== 'undefined') {
+            %>?access_token=<%= accessToken %><% } %>">View all
+            projects</a></td>
+        <td>Only admins can view all projects, which include the balance field
+            </td>
+        <td>GET /api/projects</td>
+        <td>admin only</td>
+        <td>admin</td>
+        <td>Built-in REST endpoint, how to control access using slc
+          loopback:acl, define a user named admin, add list of users to role
+          mapping say who are admins</td>
+      </tr>
+      <tr>
+        <td><a href="/api/projects/1<% if (typeof accessToken !== 'undefined')
+            { %>?access_token=<%= accessToken %><% } %>">Show balance for
+            project 1</a></td>
+        <td>Shows all fields for project 1, only owner and team members can
+            view</td>
+        <td>GET /api/projects/1</td>
+        <td>admin only</td>
+        <td>admin</td>
+        <td>Built-in REST endpoint, how to control access using slc
+          loopback:acl, only team members can view (includes $owner). add team
+          member custom role resolver, make sure we use the access token to
+          figure out if the user is a team member or a owner or an admin, etc
+          </td>
+      </tr>
+      <tr>
+        <td>
+          <form action="/api/projects/donate<% if (typeof accessToken !==
+            'undefined') { %>?access_token=<%= accessToken %><% } %>"
+            method="post">
+            <label for="amount">Donate</h2>
+            <input type="hidden" name="id" value="1">
+            <input type="text" name="amount" value="100">
+            <input type="submit" value="Submit">
+          </form>
+        </td>
+        <td>Donate amount (default $100) to project 1</td>
+        <td>POST /api/projects/1</td>
+        <td>any authenticated user can donate (admin, owner, team member)</td>
+        <td>update/write</td>
+        <td>Built-in REST endpoint, how to control access using slc
+          loopback:acl, any authenticated user only team members can view
+          (includes $owner). add team member custom role resolver, make sure we
+          use the access token to figure out if the user is a team member or a
+          owner or an admin, etc</td>
+      </tr>
+      <tr>
+        <td>
+          <form action="/api/projects/withdraw<% if (typeof accessToken !==
+            'undefined') { %>?access_token=<%= accessToken %><% } %>"
+            method="post">
+            <label for="amount">Withdraw</h2>
+            <input type="hidden" name="id" value="1">
+            <input type="text" name="amount" value="100">
+            <input type="submit" value="Submit">
+          </form>
+        </td>
+        <td>Shows all fields for project 1, only owner and team members can
+            view</td>
+        <td>GET /api/projects/1</td>
+        <td>authenticated (admin, owner, team member)</td>
+        <td>read</td>
+        <td>Built-in REST endpoint, how to control access using slc
+          loopback:acl, only team members can view (includes $owner). add team
+          member custom role resolver, make sure we use the access token to
+          figure out if the user is a team member or a owner or an admin,
+          etc</td>
+      </tr>
+      <tr>
+        <td colspan=6><a href="/logout<% if (typeof accessToken !==
+            'undefined') { %>?access_token=<%= accessToken %><% } %>">Log
+            out</a></td>
+      </tr>
+    </table>
+  </body>
+</html>
