@@ -7,11 +7,11 @@ module.exports = function(app) {
   var Team = app.models.Team;
 
   User.create([
-    {email: 'john@doe.com', password: 'opensesame'},
-    {email: 'jane@doe.com', password: 'opensesame'},
-    {email: 'bob@projects.com', password: 'opensesame'}
+    {username: 'john', email: 'john@doe.com', password: 'opensesame'},
+    {username: 'jane', email: 'jane@doe.com', password: 'opensesame'},
+    {username: 'bob', email: 'bob@projects.com', password: 'opensesame'}
   ], function(er, users) {
-    if (er) return debug(er);
+    if (er) return debug("$j", er);
     debug(users);
     //create project 1 and make john the owner
     users[0].projects.create({
