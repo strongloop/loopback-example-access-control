@@ -5,13 +5,13 @@
     <title>LoopBack example access control</title>
   </head>
   <body>
-    <h1>Projects.com</h1>
+    <h1>Startkicker</h1>
     <table border=1 cellpadding=5>
       <tr>
         <th>Login</th>
         <th>User name</th>
         <th>User type</th>
-        <th>Role</th>
+        <th>Role ($ = built-in role)</th>
       </tr>
       <tr>
         <td><a href="/projects">Guest</a></td>
@@ -29,7 +29,7 @@
         </td>
         <td>John</td>
         <td>Owner (of project 1)</td>
-        <td>$owner, $authenticated, $everyone</td>
+        <td>$owner, teamMember, $authenticated, $everyone</td>
       </tr>
       <tr>
         <td>
@@ -41,7 +41,7 @@
         </td>
         <td>Jane</td>
         <td>Team member (of project 1)</td>
-        <td>$teamMember, $authenticated, $everyone</td>
+        <td>teamMember, $authenticated, $everyone</td>
       </tr>
       <tr>
         <td>
