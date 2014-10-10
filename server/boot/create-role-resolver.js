@@ -14,7 +14,7 @@ module.exports = function(app) {
     }
     var userId = context.accessToken.userId;
     if (!userId) {
-      return reject(); //do not allow anonymous users
+      return reject(); // do not allow anonymous users
     }
     // check if userId is in team table for the given project id
     context.model.findById(context.modelId, function(err, project) {
@@ -30,7 +30,7 @@ module.exports = function(app) {
           debug(err);
           return cb(null, false);
         }
-        cb(null, count > 0); //true = is a team member
+        cb(null, count > 0); // true = is a team member
       });
     });
   });

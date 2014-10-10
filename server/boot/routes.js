@@ -3,8 +3,6 @@ module.exports = function(app) {
 
   router.get('/', function(req, res) {
     res.render('index', {
-      email: 'john@doe.com',
-      password: 'opensesame',
       loginFailed: false
     });
   });
@@ -19,8 +17,8 @@ module.exports = function(app) {
     app.models.User.login({
       email: email,
       password: password
-    }, function(er, user) {
-      if (er) {
+    }, function(err, user) {
+      if (err) {
         res.render('index', {
           email: email,
           password: password,
@@ -28,7 +26,7 @@ module.exports = function(app) {
         });
       } else {
         res.render('projects', {
-          email: email,
+          username: user.username,
           accessToken: user.id
         });
       }

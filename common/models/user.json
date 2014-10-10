@@ -1,7 +1,11 @@
 {
   "name": "user",
   "base": "User",
-  "properties": {},
+  "properties": {
+    "username": {
+      "type": "string"
+    }
+  },
   "validations": [],
   "relations": {
     "projects": {
