@@ -7,25 +7,25 @@ module.exports = function(app) {
   var Team = app.models.Team;
 
   User.create([
-    {username: 'john', email: 'john@doe.com', password: 'opensesame'},
-    {username: 'jane', email: 'jane@doe.com', password: 'opensesame'},
-    {username: 'bob', email: 'bob@projects.com', password: 'opensesame'}
-  ], function(er, users) {
-    if (er) return debug("$j", er);
+    {username: 'John', email: 'john@doe.com', password: 'opensesame'},
+    {username: 'Jane', email: 'jane@doe.com', password: 'opensesame'},
+    {username: 'Bob', email: 'bob@projects.com', password: 'opensesame'}
+  ], function(err, users) {
+    if (err) return debug('%j', err);
     debug(users);
     //create project 1 and make john the owner
     users[0].projects.create({
       name: 'project1',
       balance: 100
-    }, function(er, project) {
-      if (er) return debug(er);
+    }, function(err, project) {
+      if (err) return debug(err);
       debug(project);
       //add team members
       Team.create([
         {ownerId: project.ownerId, memberId: users[0].id},
         {ownerId: project.ownerId, memberId: users[1].id}
-      ], function(er, team) {
-        if (er) return debug(er);
+      ], function(err, team) {
+        if (err) return debug(err);
         debug(team);
       });
     });
@@ -34,15 +34,15 @@ module.exports = function(app) {
     users[1].projects.create({
       name: 'project2',
       balance: 100
-    }, function(er, project) {
-      if (er) return debug(er);
+    }, function(err, project) {
+      if (err) return debug(err);
       debug(project);
       //add team members
       Team.create({
         ownerId: project.ownerId,
         memberId: users[1].id
-      }, function(er, team) {
-        if (er) return debug(er);
+      }, function(err, team) {
+        if (err) return debug(err);
         debug(team);
       });
     });
@@ -50,15 +50,15 @@ module.exports = function(app) {
     //create the admin role
     Role.create({
       name: 'admin'
-    }, function(er, role) {
-      if (er) return debug(er);
+    }, function(err, role) {
+      if (err) return debug(err);
       debug(role);
       //make bob an admin
       role.principals.create({
         principalType: RoleMapping.USER,
         principalId: users[2].id
-      }, function(er, principal) {
-        if (er) return debug(er);
+      }, function(err, principal) {
+        if (err) return debug(err);
         debug(principal);
       });
     });

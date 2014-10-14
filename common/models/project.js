@@ -14,8 +14,8 @@ module.exports = function(Project) {
 
   //donate
   Project.donate = function(id, amount, cb) {
-    Project.findById(id, function(er, project) {
-      if (er) return cb(er);
+    Project.findById(id, function(err, project) {
+      if (err) return cb(err);
       project.balance += amount;
       project.save();
       cb(null, true);
@@ -32,8 +32,8 @@ module.exports = function(Project) {
 
   //withdraw
   Project.withdraw = function(id, amount, cb) {
-    Project.findById(id, function(er, project) {
-      if (er) return cb(er);
+    Project.findById(id, function(err, project) {
+      if (err) return cb(err);
       if (project.balance >= amount) {
         project.balance -= amount;
       }
