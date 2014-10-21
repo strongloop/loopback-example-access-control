@@ -1,4 +1,4 @@
-#Overview
+##Overview
 This example demonstrates authentication and authorization using [LoopBack](http://loopback.io) access controls.
 
 #Prerequisites
@@ -8,7 +8,7 @@ Before starting, makes sure you've followed [Getting Started with LoopBack](http
 - [EJS](https://github.com/expressjs/body-parser)
 - [JSON](http://json.org/)
 
-#Procedure
+##Procedure
 Run the following to see the example in action:
 ```
 git clone https://github.com/strongloop/loopback-example-access-control
