@@ -1,7 +1,7 @@
 ##Overview
 This example demonstrates authentication and authorization using [LoopBack](http://loopback.io) access controls.
 
-#Prerequisites
+##Prerequisites
 Before starting, makes sure you've followed [Getting Started with LoopBack](http://docs.strongloop.com/display/LB/Getting+started+with+LoopBack) to install Node and LoopBack. Familiarize yourself with [LoopBack authentication and authorization](http://docs.strongloop.com/display/LB/Authentication+and+authorization) before starting this tutorial. You will also need knowledge of:
 
 - [body-parser](https://github.com/visionmedia/ejs)
