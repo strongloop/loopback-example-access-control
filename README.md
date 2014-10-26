@@ -155,7 +155,7 @@ Otherwise, follow the steps below to create the application from scratch.
 10. **Create ACLs.**
 
     ACLs are used to restrict access to the app REST endpoints. From the project
-    root, run `slc loopack:acl` and create each of the following ACL entries
+    root, run `slc loopback:acl` and create each of the following ACL entries
     for the `project` model:
 
     - Deny access to all project REST endpoints
