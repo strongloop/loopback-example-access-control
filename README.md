@@ -31,19 +31,19 @@ slc run
 
 Follow the steps below to create the application from scratch.
 
-1. **Bootstrap the app.**
+1. **Create the application.**
 
     Run `slc loopback` and name the app `loopback-example-access-control`.
 
 2. **Create the models.**
 
-    Run `slc loopback:model` and create the following models:
+    Run `slc loopback:model` and answer the prompts to create the following models:
 
     - `user`
       - Data source: db (memory)
       - Expose via REST: No
       - Properties:
-        - None (we will extend the `User` model)
+        - None (it will extend the built-in `User` model)
     - `team`
       - Data source: db (memory)
       - Expose via REST: No
