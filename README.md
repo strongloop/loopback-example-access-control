@@ -1,14 +1,24 @@
 ##Overview
-This example demonstrates authentication and authorization using [LoopBack](http://loopback.io) access controls.
+This example application demonstrates authentication and authorization using [LoopBack](http://loopback.io) 
+access controls.  The application ("Startkicker", similar to Kickstarter) consists of four types of users: 
+ - `guest`
+ - `owner`
+ - `team member`
+ - `administrator`
+
+Each user type has access to various parts of the app based on their role and the application's
+access control lists (ACLs).
 
 ##Prerequisites
-Before starting, makes sure you've followed [Getting Started with LoopBack](http://docs.strongloop.com/display/LB/Getting+started+with+LoopBack) to install Node and LoopBack. Familiarize yourself with [LoopBack authentication and authorization](http://docs.strongloop.com/display/LB/Authentication+and+authorization) before starting this tutorial. You will also need knowledge of:
+Before starting, makes sure you've followed [Getting Started with LoopBack](http://docs.strongloop.com/display/LB/Getting+started+with+LoopBack) to install Node and LoopBack. Familiarize yourself with [LoopBack authentication and authorization](http://docs.strongloop.com/display/LB/Authentication+and+authorization) before starting this tutorial. 
+
+You will also need knowledge of:
 
 - [body-parser](https://github.com/visionmedia/ejs)
 - [EJS](https://github.com/expressjs/body-parser)
 - [JSON](http://json.org/)
 
-##Procedure
+##Try it out
 Run the following to see the example in action:
 ```
 git clone https://github.com/strongloop/loopback-example-access-control
@@ -17,14 +27,9 @@ npm install
 slc run
 ```
 
-Otherwise, follow the steps below to create the application from scratch.
+## Create the application yourself
 
-1. **Getting started.**
-
-    You will build an app named *Startkicker* (a Kickstarter clone). The
-    app consists of four types of users: `guest`, `owner`, `team member` and
-    `administrator`. Each user type has access to various parts of the app
-    based on their role and the ACLs we define.
+Follow the steps below to create the application from scratch.
 
 2. **Bootstrap the app.**
 
@@ -56,9 +61,7 @@ Otherwise, follow the steps below to create the application from scratch.
     Next, extend the `user` model by changing the `base` property in
     `common/models/user.json` from `PersistedModel` to `User`. Then copy
     [`project.js`](/common/models/project.js) to `common/models/project.js` to
-    add custom REST endpoints to the app.
-
-    >Custom REST endpoints are known in LoopBack as [remote methods](http://docs.strongloop.com/display/LB/Defining+remote+methods).
+    add custom REST endpoints (known in LoopBack as [remote methods](http://docs.strongloop.com/display/LB/Defining+remote+methods)).
 
 4. **Create the model relations.**
 
