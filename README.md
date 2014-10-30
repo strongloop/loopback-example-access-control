@@ -6,7 +6,7 @@ access controls.  The application ("Startkicker", similar to Kickstarter) consis
  - `team member`
  - `administrator`
 
-Each user type has access to various parts of the app based on their role and the application's
+Each user type has the ability to do certain things based on their role and the application's
 access control lists (ACLs).
 
 ##Prerequisites
@@ -31,11 +31,11 @@ slc run
 
 Follow the steps below to create the application from scratch.
 
-2. **Bootstrap the app.**
+1. **Bootstrap the app.**
 
     Run `slc loopback` and name the app `loopback-example-access-control`.
 
-3. **Create the models.**
+2. **Create the models.**
 
     Run `slc loopback:model` and create the following models:
 
@@ -58,10 +58,13 @@ Follow the steps below to create the application from scratch.
         - name | String | Not required
         - balance | Number | Not required
 
-    Next, extend the `user` model by changing the `base` property in
-    `common/models/user.json` from `PersistedModel` to `User`. Then copy
-    [`project.js`](/common/models/project.js) to `common/models/project.js` to
-    add custom REST endpoints (known in LoopBack as [remote methods](http://docs.strongloop.com/display/LB/Defining+remote+methods)).
+3. Modify your `user` model so it extends the built-in LoopBack user model: Change the `base` property in
+    `common/models/user.json` from `PersistedModel` to `User`. 
+
+4. Create custom REST endpoints (known in LoopBack as 
+   [remote methods](http://docs.strongloop.com/display/LB/Defining+remote+methods)) for the `project` model.  
+   Copy [`project.js`](/common/models/project.js) to `common/models/project.js`.  Take a look at the code;
+   you'll see methods `listProjects`, `donate`, and `withdraw`.
 
 4. **Create the model relations.**
 
