@@ -17,7 +17,7 @@ module.exports = function(app) {
     app.models.User.login({
       email: email,
       password: password
-    }, function(err, user) {
+    }, function(err, token) {
       if (err) {
         res.render('index', {
           email: email,
@@ -25,9 +25,11 @@ module.exports = function(app) {
           loginFailed: true
         });
       } else {
-        res.render('projects', {
-          username: user.username,
-          accessToken: user.id
+        app.models.User.findOne({where: {id: token.userId}}, function (err, user) {
+          res.render('projects', {
+            username: user.username,
+            accessToken: token.id
+          });
         });
       }
     });
