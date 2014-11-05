@@ -14,8 +14,8 @@ Before starting, makes sure you've followed [Getting Started with LoopBack](http
 
 You will also need knowledge of:
 
-- [body-parser](https://github.com/visionmedia/ejs)
-- [EJS](https://github.com/expressjs/body-parser)
+- [EJS](https://github.com/visionmedia/ejs)
+- [body-parser](https://github.com/expressjs/body-parser)
 - [JSON](http://json.org/)
 
 ##Try it out
