@@ -14,10 +14,12 @@ module.exports = function(app) {
   router.post('/projects', function(req, res) {
     var email = req.body.email;
     var password = req.body.password;
+    console.log(email, password);
     app.models.User.login({
       email: email,
       password: password
-    }, function(err, user) {
+    }, 'user', function(err, token) {
+      token = token.toJSON();
       if (err) {
         res.render('index', {
           email: email,
@@ -26,8 +28,8 @@ module.exports = function(app) {
         });
       } else {
         res.render('projects', {
-          username: user.username,
-          accessToken: user.id
+          username: token.user.username,
+          accessToken: token.id
         });
       }
     });
