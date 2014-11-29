@@ -11,21 +11,21 @@ module.exports = function(app) {
     {username: 'Jane', email: 'jane@doe.com', password: 'opensesame'},
     {username: 'Bob', email: 'bob@projects.com', password: 'opensesame'}
   ], function(err, users) {
-    if (err) return debug('%j', err);
+    if (err) throw err;
     debug(users);
     //create project 1 and make john the owner
     users[0].projects.create({
       name: 'project1',
       balance: 100
     }, function(err, project) {
-      if (err) return debug(err);
+      if (err) throw err;
       debug(project);
       //add team members
       Team.create([
         {ownerId: project.ownerId, memberId: users[0].id},
         {ownerId: project.ownerId, memberId: users[1].id}
       ], function(err, team) {
-        if (err) return debug(err);
+        if (err) throw err;
         debug(team);
       });
     });
@@ -35,14 +35,14 @@ module.exports = function(app) {
       name: 'project2',
       balance: 100
     }, function(err, project) {
-      if (err) return debug(err);
+      if (err) throw err;
       debug(project);
       //add team members
       Team.create({
         ownerId: project.ownerId,
         memberId: users[1].id
       }, function(err, team) {
-        if (err) return debug(err);
+        if (err) throw err;
         debug(team);
       });
     });
@@ -51,14 +51,14 @@ module.exports = function(app) {
     Role.create({
       name: 'admin'
     }, function(err, role) {
-      if (err) return debug(err);
+      if (err) throw err;
       debug(role);
       //make bob an admin
       role.principals.create({
         principalType: RoleMapping.USER,
         principalId: users[2].id
       }, function(err, principal) {
-        if (err) return debug(err);
+        if (err) throw err;
         debug(principal);
       });
     });
