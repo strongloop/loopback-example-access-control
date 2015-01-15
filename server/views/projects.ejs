@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>LoopBack example access control</title>
+  </head>
+  <body>
+  <h1>Startkicker<% if (typeof username !== 'undefined') { %> - Welcome <%=
+      username %><% } %></h1>
+    <table border=1 cellpadding=5>
+      <tr>
+        <th>Function</th>
+        <th>Description</th>
+        <th>Endpoint</th>
+        <th>Permissions</th>
+        <th>Roles</th>
+        <th>Information</th>
+      </tr>
+      <tr>
+        <td><a href="/api/projects/list-projects">List projects</a></td>
+        <td>Anyone can list public project info (no balance property)</td>
+        <td>GET /api/projects/list-projects</td>
+        <td>$everyone, $unauthenticated, $authenticated</td>
+        <td>Guest, team member, owner, administrator</td>
+        <td>This endpoint is a remote method with a static ACL set to allow
+            access for all users (using the built-in role $everyone).</td>
+      </tr>
+      <tr>
+        <td><a href="/api/projects<% if (typeof accessToken !== 'undefined') {
+            %>?access_token=<%= accessToken %><% } %>">View all
+            projects</a></td>
+        <td>Only administrators can view all projects</td>
+        <td>GET /api/projects</td>
+        <td>admin</td>
+        <td>Administator</td>
+        <td>This REST endpoint is generated from the `slc loopback:model`
+          command.  We create a custom role named "admin" and a role mapping to
+          set Bob as a "admin". We then apply the ACL to restrict access to only
+          admins via the `slc loopback:acl` command.</td>
+      </tr>
+      <tr>
+        <td><a href="/api/projects/1<% if (typeof accessToken !== 'undefined')
+            { %>?access_token=<%= accessToken %><% } %>">Show balance for
+            project 1</a></td>
+        <td>Shows all fields for project 1</td>
+        <td>GET /api/projects/1</td>
+        <td>teamMember, $owner</td>
+        <td>Team member, owner</td>
+        <td>Also a built-in REST endpoint generated from the `slc
+          loopback:model` command. We register a custom role resolver here and
+          use the provided access token to figure out if the request is from a
+          team member and provide or deny access accordingly.</td>
+      </tr>
+      <tr>
+        <td>
+          <form action="/api/projects/donate<% if (typeof accessToken !==
+              'undefined') { %>?access_token=<%= accessToken %><% } %>"
+              method="post">
+            <label for="amount">Donate</h2>
+            <input type="hidden" name="id" value="1">
+            <input type="text" name="amount" value="100">
+            <input type="submit" value="Submit">
+          </form>
+        </td>
+        <td>Donate money (default $100) to project 1</td>
+        <td>POST /api/projects/donate</td>
+        <td>$authenticated</td>
+        <td>Team member, owner, admin</td>
+        <td>A remote method that takes an argument (the amount of money to
+          donate). We add an ACL that restricts access to any authenticated
+          user (guests are not allowed to donate).</td>
+      </tr>
+      <tr>
+        <td>
+          <form action="/api/projects/withdraw<% if (typeof accessToken !==
+            'undefined') { %>?access_token=<%= accessToken %><% } %>"
+            method="post">
+            <label for="amount">Withdraw</h2>
+            <input type="hidden" name="id" value="1">
+            <input type="text" name="amount" value="100">
+            <input type="submit" value="Submit">
+          </form>
+        </td>
+        <td>Withdraw money (default $100) from project 1</td>
+        <td>POST /api/projects/withdraw</td>
+        <td>$owner</td>
+        <td>owner</td>
+        <td>Another remote method similar to donate, but substracts money from
+          the balance instead of adding to it. Only the project owner is allowed
+          to withdraw. We enforce this using `slc loopback:acl` to generate an
+          ACL restricting access to $owner.</td>
+      </tr>
+      <tr>
+        <td colspan=6><a href="/logout<% if (typeof accessToken !==
+            'undefined') { %>?access_token=<%= accessToken %><% } %>">Log
+            out</a></td>
+      </tr>
+    </table>
+  </body>
+</html>

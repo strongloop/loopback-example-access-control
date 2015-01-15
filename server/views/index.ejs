@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>LoopBack example access control</title>
+  </head>
+  <body>
+    <h1>Startkicker</h1>
+    <table border=1 cellpadding=5>
+      <tr>
+        <th>Login</th>
+        <th>User name</th>
+        <th>User type</th>
+        <th>Role ($ = built-in role)</th>
+      </tr>
+      <tr>
+        <td><a href="/projects">Guest</a></td>
+        <td></td>
+        <td>Guest</td>
+        <td>$unauthenticated, $everyone</td>
+      </tr>
+      <tr>
+        <td>
+          <form action="/projects" method="post">
+            <input type="text" name="email" value="john@doe.com" placeholder="Email"><br>
+            <input type="password" name="password" value="opensesame" placeholder="Password"><br>
+            <input type="submit" value="Login">
+          </form>
+        </td>
+        <td>John</td>
+        <td>Owner (of project 1)</td>
+        <td>$owner, teamMember, $authenticated, $everyone</td>
+      </tr>
+      <tr>
+        <td>
+          <form action="/projects" method="post">
+            <input type="text" name="email" value="jane@doe.com" placeholder="Email"><br>
+            <input type="password" name="password" value="opensesame" placeholder="Password"><br>
+            <input type="submit" value="Login">
+          </form>
+        </td>
+        <td>Jane</td>
+        <td>Team member (of project 1)</td>
+        <td>teamMember, $authenticated, $everyone</td>
+      </tr>
+      <tr>
+        <td>
+          <form action="/projects" method="post">
+            <input type="text" name="email" value="bob@projects.com" placeholder="Email"><br>
+            <input type="password" name="password" value="opensesame" placeholder="Password"><br>
+            <input type="submit" value="Login">
+          </form>
+        </td>
+        <td>Bob</td>
+        <td>Administrator</td>
+        <td>admin, $authenticated, $everyone</td>
+      </tr>
+      <% if (loginFailed) { %>
+        <tr>
+          <td colspan=6>
+              <span style="color:red">Login failed, please try again</span>
+          </td>
+        </tr>
+      <% } %>
+    </table>
+  </body>
+</html>
