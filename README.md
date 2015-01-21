@@ -85,9 +85,9 @@ cd loopback-example-access-control
     - `ownerId`
       - Number
       - Not required
-    - `balance`
+    - `memberId`
       - Number
-      - Not required
+      - Required
 - Name: `project`
   - Datasource: `db (memory)`
   - Base class: `PersistedModel`
