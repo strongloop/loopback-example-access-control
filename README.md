@@ -255,6 +255,7 @@ slc loopback:acl
 ```
 
 > Note, you have to manually change [`READ` to `EXECUTE` in `project.json`](/server/common/project.json) for the `listProjects` endpoint to work properly.
+
 ###11. Try the application
 
 Start the server (`slc run`) and open [`localhost:3000`][localhost] in your browser to view the app. You will see logins and explanations related to each user type we created:
