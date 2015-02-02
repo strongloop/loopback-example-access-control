@@ -111,11 +111,11 @@ slc loopback:model user
 
 ###3. Define the remote methods
 
-Define three remote methods in [`project.js`](/common/models/project.js):
+Define three remote methods in [`project.js`](https://github.com/strongloop/loopback-example-access-control/common/models/project.js):
 
-- [`listProjects`](/common/models/project.js#L2-L13)
-- [`donate`](/common/models/project.js#L15-L31)
-- [`withdraw`](/common/models/project.js#L33-54)
+- [`listProjects`](https://github.com/strongloop/loopback-example-access-control/common/models/project.js#L2-L13)
+- [`donate`](https://github.com/strongloop/loopback-example-access-control/common/models/project.js#L15-L31)
+- [`withdraw`](https://github.com/strongloop/loopback-example-access-control/common/models/project.js#L33-54)
 
 ###4. Create the model relations
 
@@ -145,7 +145,7 @@ Define three remote methods in [`project.js`](/common/models/project.js):
 
 ###5. Add model instances
 
-Create a boot script named [`sample-models.js`](/server/boot/sample-model.js).
+Create a boot script named [`sample-models.js`](https://github.com/strongloop/loopback-example-access-control/server/boot/sample-model.js).
 This script:
 
 - [Creates 3 users](/server/boot/sample-models.js#L7-L11 (`John`, `Jane`, and
@@ -163,41 +163,41 @@ This script:
 > server-side templating by simply setting the proper view engine and a
 > directory to store the views.
 
-Create a [`views` directory](/server/views) to store server-side templates.
+Create a [`views` directory](https://github.com/strongloop/loopback-example-access-control/server/views) to store server-side templates.
 
 ```
 mkdir server/views
 ```
 
-Add [server-side templating configurations to `server.js`](/server/server.js#L11-L20).
+Add [server-side templating configurations to `server.js`](https://github.com/strongloop/loopback-example-access-control/server/server.js#L11-L20).
 
-Create [`index.ejs` in the views directory](/server/views/index.ejs).
+Create [`index.ejs` in the views directory](https://github.com/strongloop/loopback-example-access-control/server/views/index.ejs).
 
-[Configure `server.js`](/server/server.js#L11-L20) to use server-side
-templating. Remember to import the [`path`](/server/server.js#L3) package
+[Configure `server.js`](https://github.com/strongloop/loopback-example-access-control/server/server.js#L11-L20) to use server-side
+templating. Remember to import the [`path`](https://github.com/strongloop/loopback-example-access-control/server/server.js#L3) package
 
-> Remember to include the [`path`](/server/server.js#L3) module.
+> Remember to include the [`path`](https://github.com/strongloop/loopback-example-access-control/server/server.js#L3) module.
 
 ###7. Add routes
 
-Create [`routes.js`](/server/boot/routes.js). This script:
+Create [`routes.js`](https://github.com/strongloop/loopback-example-access-control/server/boot/routes.js). This script:
 
-- Sets the [`GET /` route to render `index.ejs`](/server/views/index.ejs)
-- Sets the [`GET /projects` route to render `projects.ejs`](server/views/projects.ejs)
-- Sets the [`POST /projects` route to to render `projects.ejs` when credentials are valid](server/views/projects.ejs) and [renders `index.ejs`](server/views/index.ejs) when credentials are invalid]
-- Sets the [`GET /logout` route to log the user out](/server/views/routes.js)
+- Sets the [`GET /` route to render `index.ejs`](https://github.com/strongloop/loopback-example-access-control/server/views/index.ejs)
+- Sets the [`GET /projects` route to render `projects.ejs`](https://github.com/strongloop/loopback-example-access-control/server/views/projects.ejs)
+- Sets the [`POST /projects` route to to render `projects.ejs` when credentials are valid](server/views/projects.ejs) and [renders `index.ejs`](https://github.com/strongloop/loopback-example-access-control/server/views/index.ejs) when credentials are invalid]
+- Sets the [`GET /logout` route to log the user out](https://github.com/strongloop/loopback-example-access-control/server/views/routes.js)
 
 > When you log in sucessfully, `projects.html` is rendered with the authenticated user's access token embedded into each link.
 
 ###8. Create the views
 
-Create the [`views` directory](/server/views) to store views.
+Create the [`views` directory](https://github.com/strongloop/loopback-example-access-control/server/views) to store views.
 
-In this directory, create [`index.ejs`](/server/views/index.ejs) and [`projects.ejs`](/server/views/project.ejs).
+In this directory, create [`index.ejs`](https://github.com/strongloop/loopback-example-access-control/server/views/index.ejs) and [`projects.ejs`](https://github.com/strongloop/loopback-example-access-control/server/views/project.ejs).
 
 ###9. Create a role resolver
 
-Create [`role-resolver.js`](/server/boot/role-resolver.js).
+Create [`role-resolver.js`](https://github.com/strongloop/loopback-example-access-control/server/boot/role-resolver.js).
 
 > This file checks if the context relates to the project model and if the
 > request maps to a user. If these two requirements are not met, the request is
@@ -254,7 +254,7 @@ slc loopback:acl
 # follow the prompts, repeat for each ACL listed above
 ```
 
-> Note, you have to manually change [`READ` to `EXECUTE` in `project.json`](/server/common/project.json) for the `listProjects` endpoint to work properly.
+> Note, you have to manually change [`READ` to `EXECUTE` in `project.json`](https://github.com/strongloop/loopback-example-access-control/server/common/project.json) for the `listProjects` endpoint to work properly.
 
 ###11. Try the application
 
