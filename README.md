@@ -154,9 +154,9 @@ This script:
 - [Creates project 1, sets `John` as the owner and adds `John` and `Jane` as team
   members](/server/boot/sample-models.js#L14-L29)
 - [Creates project 2, sets `Jane` as the owner and solo team
-  member](/server/boot/sample-model.js#L33-L48)
+  member](/server/boot/sample-models.js#L33-L48)
 - [Creates a role named `admin` and adds a role mapping to make `Bob` an
-  `admin`](/server/boot/sample-model.js#L50-L65)
+  `admin`](/server/boot/sample-models.js#L50-L65)
 
 ###6. Configure server-side views
 
