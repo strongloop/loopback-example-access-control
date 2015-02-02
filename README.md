@@ -177,8 +177,6 @@ Create [`index.ejs` in the views directory](https://github.com/strongloop/loopba
 [Configure `server.js`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/server.js#L11-L20) to use server-side
 templating. Remember to import the [`path`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/server.js#L3) package
 
-> Remember to include the [`path`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/server.js#L3) module.
-
 ###7. Add routes
 
 Create [`routes.js`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/boot/routes.js). This script:
