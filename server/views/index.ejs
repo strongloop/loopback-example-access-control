@@ -24,7 +24,9 @@
           <form action="/projects" method="post">
             <input type="text" name="email" value="john@doe.com" placeholder="Email"><br>
             <input type="password" name="password" value="opensesame" placeholder="Password"><br>
-            <input type="submit" value="Login">
+            <input type="submit" value="Request Code"><br>
+            <input type="text" name="twofactor" placeholder="Verification Code">
+            <input type="hidden" name="timestamp">
           </form>
         </td>
         <td>John</td>
@@ -36,7 +38,9 @@
           <form action="/projects" method="post">
             <input type="text" name="email" value="jane@doe.com" placeholder="Email"><br>
             <input type="password" name="password" value="opensesame" placeholder="Password"><br>
-            <input type="submit" value="Login">
+            <input type="submit" value="Request Code"><br>
+            <input type="text" name="twofactor" placeholder="Verification Code">
+            <input type="hidden" name="timestamp">
           </form>
         </td>
         <td>Jane</td>
@@ -48,7 +52,9 @@
           <form action="/projects" method="post">
             <input type="text" name="email" value="bob@projects.com" placeholder="Email"><br>
             <input type="password" name="password" value="opensesame" placeholder="Password"><br>
-            <input type="submit" value="Login">
+            <input type="submit" value="Request Code"><br>
+            <input type="text" name="twofactor" placeholder="Verification Code">
+            <input type="hidden" name="timestamp">
           </form>
         </td>
         <td>Bob</td>
@@ -63,5 +69,63 @@
         </tr>
       <% } %>
     </table>
+    
+    <script>
+    (function() {
+        var forms = [].__proto__.slice.call(document.querySelectorAll('form'), 0);
+        
+        forms.forEach(function(f) {
+            f.addEventListener('submit', checkForTwoFactorAuth);
+        });
+        
+        function checkForTwoFactorAuth(e) {
+            var twofactor = e.target.querySelector("[name=twofactor]"),
+                timestamp = e.target.querySelector("[name=timestamp]"),
+                button = e.target.querySelector("[type=submit]"),
+                email = e.target.querySelector("[name=email]").value,
+                password = e.target.querySelector("[name=password]");
+            
+            if (!twofactor.value) {
+                
+                sendTwoFactorAuth({ email: email, password: password.value }, function(err, ts) {
+                    if (err) return alert(err);
+                    
+                    var code = prompt('Check your mobile phone for a one-time use code!');
+                    if (code) {
+                        twofactor.value = code;
+                        timestamp.value = ts;
+                        button.value = "Login Now!";
+                        password.value = "";
+                    }
+                });
+                
+                e.preventDefault();
+                return false;
+            }
+        }
+        
+        function sendTwoFactorAuth(credentials, callback) {
+            var xhr = new XMLHttpRequest();
+            
+            xhr.open("POST", "/api/users/requestCode", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState !== 4) return;
+                
+                if (xhr.status !== 200) {
+                    return callback('Login failed, please try again');
+                }
+                
+                var ts = JSON.parse(xhr.responseText).timestamp;
+                callback(null, ts);
+            };
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify({
+                email: credentials.email,
+                password: credentials.password
+            }));
+        }
+    })();
+    </script>
+    
   </body>
 </html>

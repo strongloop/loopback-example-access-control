@@ -12,17 +12,18 @@ module.exports = function(app) {
   });
 
   router.post('/projects', function(req, res) {
-    var email = req.body.email;
-    var password = req.body.password;
+    var email = req.body.email,
+        twofactor = req.body.twofactor,
+        timestamp = req.body.timestamp;
 
-    app.models.User.login({
+    app.models.User.loginWithCode({
       email: email,
-      password: password
-    }, 'user', function(err, token) {
+      twofactor: twofactor,
+      timestamp: timestamp
+    }, function(err, token) {
       if (err)
         return res.render('index', {
           email: email,
-          password: password,
           loginFailed: true
         });
 
