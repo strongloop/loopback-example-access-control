@@ -27,7 +27,7 @@ module.exports = function(User) {
                         return fn(defaultError);
                     } else if (isMatch) {
                         
-                        var code = speakeasy.totp({key: 'APP_SECRET' + credentials.email, time: now});
+                        var code = speakeasy.totp({key: 'APP_SECRET' + credentials.email});
                         
                         console.log('Two factor code for ' + credentials.email + ': ' + code);
                         
@@ -52,7 +52,7 @@ module.exports = function(User) {
         defaultError.statusCode = 401;
         defaultError.code = 'LOGIN_FAILED';
         
-        if (!credentials.email || !credentials.twofactor || !credentials.timestamp) {
+        if (!credentials.email || !credentials.twofactor) {
             return fn(defaultError);
         }
         
@@ -60,10 +60,9 @@ module.exports = function(User) {
             if (err) return fn(err);
             if (!user) return fn(defaultError);
             
-            var oldCode = speakeasy.totp({key: 'APP_SECRET' + credentials.email, time: credentials.timestamp});
-            
-            // TODO: check code
-            if (oldCode !== credentials.twofactor) {
+            var code = speakeasy.totp({key: 'APP_SECRET' + credentials.email});
+
+            if (code !== credentials.twofactor) {
                 return fn(defaultError);
             }
             

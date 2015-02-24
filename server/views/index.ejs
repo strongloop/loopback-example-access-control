@@ -26,7 +26,6 @@
             <input type="password" name="password" value="opensesame" placeholder="Password"><br>
             <input type="submit" value="Request Code"><br>
             <input type="text" name="twofactor" placeholder="Verification Code">
-            <input type="hidden" name="timestamp">
           </form>
         </td>
         <td>John</td>
@@ -40,7 +39,6 @@
             <input type="password" name="password" value="opensesame" placeholder="Password"><br>
             <input type="submit" value="Request Code"><br>
             <input type="text" name="twofactor" placeholder="Verification Code">
-            <input type="hidden" name="timestamp">
           </form>
         </td>
         <td>Jane</td>
@@ -54,7 +52,6 @@
             <input type="password" name="password" value="opensesame" placeholder="Password"><br>
             <input type="submit" value="Request Code"><br>
             <input type="text" name="twofactor" placeholder="Verification Code">
-            <input type="hidden" name="timestamp">
           </form>
         </td>
         <td>Bob</td>
@@ -80,7 +77,6 @@
         
         function checkForTwoFactorAuth(e) {
             var twofactor = e.target.querySelector("[name=twofactor]"),
-                timestamp = e.target.querySelector("[name=timestamp]"),
                 button = e.target.querySelector("[type=submit]"),
                 email = e.target.querySelector("[name=email]").value,
                 password = e.target.querySelector("[name=password]");
@@ -93,7 +89,6 @@
                     var code = prompt('Check your mobile phone for a one-time use code!');
                     if (code) {
                         twofactor.value = code;
-                        timestamp.value = ts;
                         button.value = "Login Now!";
                         password.value = "";
                     }
@@ -115,8 +110,7 @@
                     return callback('Login failed, please try again');
                 }
                 
-                var ts = JSON.parse(xhr.responseText).timestamp;
-                callback(null, ts);
+                callback(null, JSON.parse(xhr.responseText));
             };
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.send(JSON.stringify({
