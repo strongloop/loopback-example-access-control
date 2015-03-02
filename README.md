@@ -192,7 +192,7 @@ Create [`routes.js`](https://github.com/strongloop/loopback-example-access-contr
 
 Create the [`views` directory](https://github.com/strongloop/loopback-example-access-control/tree/master/server/views) to store views.
 
-In this directory, create [`index.ejs`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/views/index.ejs) and [`projects.ejs`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/views/project.ejs).
+In this directory, create [`index.ejs`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/views/index.ejs) and [`projects.ejs`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/views/projects.ejs).
 
 ###9. Create a role resolver
 
