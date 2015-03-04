@@ -149,7 +149,7 @@ Create a boot script named [`sample-models.js`](https://github.com/strongloop/lo
 
 This script:
 
-- [Creates 3 users](/server/boot/sample-models.js#L7-L11 (`John`, `Jane`, and
+- [Creates 3 users](/server/boot/sample-models.js#L7-L11) (`John`, `Jane`, and
   `Bob`)
 - [Creates project 1, sets `John` as the owner and adds `John` and `Jane` as team
   members](/server/boot/sample-models.js#L14-L29)
