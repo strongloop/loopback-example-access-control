@@ -53,7 +53,7 @@ application's ACL (access control list) entries.
 
 ##Procedure
 
-###1. Create the application
+###Create the application
 
 ####Application information
 
@@ -66,7 +66,7 @@ slc loopback loopback-example-access-control
 cd loopback-example-access-control
 ```
 
-###2. Add the models
+###Add the models
 
 ####Model information
 - Name: `user`
@@ -109,7 +109,7 @@ slc loopback:model user
 ... # follow the prompts, repeat for `team` and `project`
 ```
 
-###3. Define the remote methods
+###Define the remote methods
 
 Define three remote methods in [`project.js`](https://github.com/strongloop/loopback-example-access-control/blob/master/common/models/project.js):
 
@@ -117,7 +117,7 @@ Define three remote methods in [`project.js`](https://github.com/strongloop/loop
 - [`donate`](https://github.com/strongloop/loopback-example-access-control/blob/master/common/models/project.js#L15-L31)
 - [`withdraw`](https://github.com/strongloop/loopback-example-access-control/blob/master/common/models/project.js#L33-54)
 
-###4. Create the model relations
+###Create the model relations
 
 ####Model relation information
 
@@ -143,7 +143,7 @@ Define three remote methods in [`project.js`](https://github.com/strongloop/loop
       - Property name for the relation: `user`
       - Custom foreign key: `ownerId`
 
-###5. Add model instances
+###Add model instances
 
 Create a boot script named [`sample-models.js`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/boot/sample-models.js).
 
@@ -158,7 +158,7 @@ This script:
 - [Creates a role named `admin` and adds a role mapping to make `Bob` an
   `admin`](/server/boot/sample-models.js#L50-L65)
 
-###6. Configure server-side views
+###Configure server-side views
 
 > LoopBack comes preconfigured with EJS out-of-box. This means we can use
 > server-side templating by simply setting the proper view engine and a
@@ -177,7 +177,7 @@ Create [`index.ejs` in the views directory](https://github.com/strongloop/loopba
 [Configure `server.js`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/server.js#L11-L20) to use server-side
 templating. Remember to import the [`path`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/server.js#L4) package
 
-###7. Add routes
+###Add routes
 
 Create [`routes.js`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/boot/routes.js). This script:
 
@@ -188,13 +188,13 @@ Create [`routes.js`](https://github.com/strongloop/loopback-example-access-contr
 
 > When you log in sucessfully, `projects.html` is rendered with the authenticated user's access token embedded into each link.
 
-###8. Create the views
+###Create the views
 
 Create the [`views` directory](https://github.com/strongloop/loopback-example-access-control/tree/master/server/views) to store views.
 
 In this directory, create [`index.ejs`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/views/index.ejs) and [`projects.ejs`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/views/projects.ejs).
 
-###9. Create a role resolver
+###Create a role resolver
 
 Create [`role-resolver.js`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/boot/role-resolver.js).
 
@@ -203,7 +203,7 @@ Create [`role-resolver.js`](https://github.com/strongloop/loopback-example-acces
 > denied. Otherwise, we check to see if the user is a team member and process
 > the request accordingly.
 
-###10. Create ACL entries
+###Create ACL entries
 
 > ACLs are used to restrict access to application REST endpoints.
 
@@ -255,7 +255,7 @@ slc loopback:acl
 
 > Note, you have to manually change [`READ` to `EXECUTE` in `project.json`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/common/project.json) for the `listProjects` endpoint to work properly.
 
-###11. Try the application
+###Try the application
 
 Start the server (`slc run`) and open [`localhost:3000`][localhost] in your browser to view the app. You will see logins and explanations related to each user type we created:
 
@@ -271,10 +271,6 @@ Start the server (`slc run`) and open [`localhost:3000`][localhost] in your brow
 - Bob `Administator`
   - Role = $everyone, $authenticated, admin
   - Can access all functions except "Withdraw"
-
-###12. Conclusion
-
-You've now seen various ways to implement your own logic within a LoopBack application. For more information, see the [LoopBack app logic documentation](http://docs.strongloop.com/display/LB/Adding+application+logic)
 
 ---
 
