@@ -4,7 +4,7 @@
 git clone git://github.com/strongloop/loopback-example-access-control.git
 cd loopback-example-access-control
 npm install
-slc run
+node .
 ```
 
 In this example, we create "Startkicker" (a basic Kickstarter-like
