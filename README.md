@@ -147,11 +147,11 @@ Define three remote methods in [`project.js`](https://github.com/strongloop/loop
 
 Create a boot script named [`sample-models.js`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/boot/sample-models.js).
 
-This script:
+This script does the following:
 
 - [Creates 3 users](/server/boot/sample-models.js#L7-L11) (`John`, `Jane`, and
   `Bob`)
-- [Creates project 1, sets `John` as the owner and adds `John` and `Jane` as team
+- [Creates project 1, sets `John` as the owner, and adds `John` and `Jane` as team
   members](/server/boot/sample-models.js#L14-L29)
 - [Creates project 2, sets `Jane` as the owner and solo team
   member](/server/boot/sample-models.js#L33-L48)
@@ -175,15 +175,15 @@ Add [server-side templating configurations to `server.js`](https://github.com/st
 Create [`index.ejs` in the views directory](https://github.com/strongloop/loopback-example-access-control/blob/master/server/views/index.ejs).
 
 [Configure `server.js`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/server.js#L11-L20) to use server-side
-templating. Remember to import the [`path`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/server.js#L4) package
+templating. Remember to import the [`path`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/server.js#L4) package.
 
 ###Add routes
 
-Create [`routes.js`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/boot/routes.js). This script:
+Create [`routes.js`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/boot/routes.js). This script does the following:
 
 - Sets the [`GET /` route to render `index.ejs`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/views/index.ejs)
 - Sets the [`GET /projects` route to render `projects.ejs`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/views/projects.ejs)
-- Sets the [`POST /projects` route to to render `projects.ejs` when credentials are valid](server/views/projects.ejs) and [renders `index.ejs`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/views/index.ejs) when credentials are invalid]
+- Sets the [`POST /projects` route to to render `projects.ejs` when credentials are valid](server/views/projects.ejs) and [renders `index.ejs`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/views/index.ejs) when credentials are invalid
 - Sets the [`GET /logout` route to log the user out](https://github.com/strongloop/loopback-example-access-control/blob/master/server/views/routes.js)
 
 > When you log in sucessfully, `projects.html` is rendered with the authenticated user's access token embedded into each link.
@@ -257,7 +257,7 @@ slc loopback:acl
 
 ###Try the application
 
-Start the server (`slc run`) and open [`localhost:3000`][localhost] in your browser to view the app. You will see logins and explanations related to each user type we created:
+Start the server (`node .`) and open [`localhost:3000`][localhost] in your browser to view the app. You will see logins and explanations related to each user type we created:
 
 - Guest `Guest`
   - Role = $everyone, $unauthenticated
