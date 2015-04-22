@@ -253,8 +253,6 @@ slc loopback:acl
 # follow the prompts, repeat for each ACL listed above
 ```
 
-> Note, you have to manually change [`READ` to `EXECUTE` in `project.json`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/common/project.json) for the `listProjects` endpoint to work properly.
-
 ###Try the application
 
 Start the server (`node .`) and open [`localhost:3000`][localhost] in your browser to view the app. You will see logins and explanations related to each user type we created:
