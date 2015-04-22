@@ -1,7 +1,7 @@
 #loopback-example-access-control
 
 ```
-git clone git://github.com/strongloop/loopback-example-access-control.git
+git clone https://github.com/strongloop/loopback-example-access-control
 cd loopback-example-access-control
 npm install
 node .
