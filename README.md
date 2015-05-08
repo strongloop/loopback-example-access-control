@@ -1,10 +1,10 @@
 #loopback-example-access-control
 
 ```
-git clone https://github.com/strongloop/loopback-example-access-control
-cd loopback-example-access-control
-npm install
-node .
+$ git clone https://github.com/strongloop/loopback-example-access-control
+$ cd loopback-example-access-control
+$ npm install
+$ node .
 ```
 
 In this example, we create "Startkicker" (a basic Kickstarter-like
@@ -61,9 +61,9 @@ application's ACL (access control list) entries.
 - Directory to contain the project: `loopback-example-access-control`
 
 ```
-slc loopback loopback-example-access-control
+$ slc loopback loopback-example-access-control
 ... # follow the prompts
-cd loopback-example-access-control
+$ cd loopback-example-access-control
 ```
 
 ###Add the models
@@ -105,7 +105,7 @@ cd loopback-example-access-control
 > the built-in `User` model by specifying it as the base class.
 
 ```
-slc loopback:model user
+$ slc loopback:model user
 ... # follow the prompts, repeat for `team` and `project`
 ```
 
@@ -167,7 +167,7 @@ This script does the following:
 Create a [`views` directory](https://github.com/strongloop/loopback-example-access-control/blob/master/server/views) to store server-side templates.
 
 ```
-mkdir server/views
+$ mkdir server/views
 ```
 
 Add [server-side templating configurations to `server.js`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/server.js#L11-L20).
@@ -249,7 +249,7 @@ Create [`role-resolver.js`](https://github.com/strongloop/loopback-example-acces
   - Select the permission to apply: `Explicitly grant access`
 
 ```
-slc loopback:acl
+$ slc loopback:acl
 # follow the prompts, repeat for each ACL listed above
 ```
 
