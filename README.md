@@ -19,21 +19,6 @@ LoopBack. The application consists of four types of users:
 Each user type has permission to perform tasks based on their role and the
 application's ACL (access control list) entries.
 
-- [Prerequisites](#prerequisites)
-- [Procedure](#procedure)
-  - [1. Create the application](#1-create-the-application)
-  - [2. Add the model](#2-add-the-models)
-  - [3. Define the remote methods](#3-define-the-remote-methods)
-  - [4. Create the model relations](#4-create-the-model-relations)
-  - [5. Add model instances](#5-add-model-instances)
-  - [6. Configure server-side views](#6-configure-server-side-views)
-  - [7. Add routes](#7-add-routes)
-  - [8. Create the views](#8-create-the-views)
-  - [9. Create a role resolver](#9-create-a-role-resolver)
-  - [10. Create ACL entries](#10-create-acl-entries)
-  - [11. Try the application](#11-try-the-application)
-  - [12. Conclusion](#12-conclusion)
-
 ##Prerequisites
 
 ###Tutorials
