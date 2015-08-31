@@ -12,13 +12,11 @@ function json(verb, url) {
   }
 
 describe('REST API request', function() {
-
   before(function(done) {
     require('./start-server');
     done();
-  })
+  });
   
-
   after(function(done) {
     app.removeAllListeners('started');
     app.removeAllListeners('loaded');
@@ -28,26 +26,26 @@ describe('REST API request', function() {
   it('should not allow access without access token', function(done){
     json('get', '/api/projects')
       .expect(401, done);
-  })
+  });
 
-  it('should login a team member and get the balance for project1', function(done) {
+  it('should login non-admin and get the balance', function(done) {
     json('post', '/api/users/login')
       .send({
-        username: "Jane",
-        password: "opensesame"
+        username: 'Jane',
+        password: 'opensesame'
       })
       .expect(200, function(err, res) {
         assert(typeof res.body === 'object');
         assert(res.body.id, 'must have an access token');
         assert.equal(res.body.userId, 2);
-        accessToken = res.body.id;
+        var accessToken = res.body.id;
         json('get', '/api/projects/' + 1 + '?access_token=' + accessToken)
           .expect(200, function(err, res){
             var projects = res.body;
             assert(typeof res.body === 'object');
             assert(res.body.balance);
             assert.equal(res.body.balance, 100); 
-          })
+          });
         done();
       });
   });
@@ -55,20 +53,20 @@ describe('REST API request', function() {
   it('should login the admin user and get all projects', function(done) {
     json('post', '/api/users/login')
       .send({
-        username: "Bob",
-        password: "opensesame"
+        username: 'Bob',
+        password: 'opensesame'
       })
       .expect(200, function(err, res) {
         assert(typeof res.body === 'object');
         assert(res.body.id, 'must have an access token');
         assert.equal(res.body.userId, 3);
-        accessToken = res.body.id;
+        var accessToken = res.body.id;
         json('get', '/api/projects?access_token=' + accessToken)
           .expect(200, function(err, res){
             var projects = res.body;
             assert(Array.isArray(res.body));
             assert.equal(res.body.length, 2);
-          })
+          });
         done();
       });
   });
@@ -81,9 +79,9 @@ describe('REST API request', function() {
           })
           .expect(200, function(err, res){            
             assert(typeof res.body === 'object');
-            assert(res.body.success)
-            assert.equal(res.body.success, true)
-          })
+            assert(res.body.success);
+            assert.equal(res.body.success, true);
+          });
         done();
   });
 
