@@ -60,7 +60,7 @@ describe('REST API request', function() {
         assert(typeof res.body === 'object');
         assert(res.body.id, 'must have an access token');
         assert.equal(res.body.userId, 3);
-        var accessToken = res.body.id;
+        accessToken = res.body.id;
         json('get', '/api/projects?access_token=' + accessToken)
           .expect(200, function(err, res){
             var projects = res.body;
@@ -84,5 +84,12 @@ describe('REST API request', function() {
           });
         done();
   });
+});
 
+describe('Unexpected Usage', function(){
+  it('should not crash the server when posting a bad id', function(done){
+    json('post', '/api/users/foobar')
+      .send({})
+      .expect(404, done);
+  });
 });
