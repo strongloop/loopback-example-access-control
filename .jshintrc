@@ -17,5 +17,12 @@
   "unused": false,
   "trailing": true,
   "sub": true,
-  "maxlen": 80
+  "maxlen": 80,
+  "globals"   : {
+    /* MOCHA */
+    "describe"   : false,
+    "it"         : false,
+    "before"     : false,
+    "after"      : false
+  }
 }

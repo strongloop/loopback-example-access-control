@@ -50,6 +50,7 @@ describe('REST API request', function() {
       });
   });
 
+  var accessToken;
   it('should login the admin user and get all projects', function(done) {
     json('post', '/api/users/login')
       .send({
