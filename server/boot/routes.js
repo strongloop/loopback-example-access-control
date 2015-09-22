@@ -37,7 +37,7 @@ module.exports = function(app) {
 
   router.get('/logout', function(req, res) {
     var AccessToken = app.models.AccessToken;
-    var token = new AccessToken({id: req.query.access_token});
+    var token = new AccessToken({id: req.query['access_token']});
     token.destroy();
 
     res.redirect('/');
