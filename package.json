@@ -18,7 +18,7 @@
     "supertest": "^1.1.0"
   },
   "optionalDependencies": {
-    "loopback-explorer": "^1.1.0"
+    "loopback-component-explorer": "^2.1.0"
   },
   "devDependencies": {
     "jshint": "^2.5.6",
