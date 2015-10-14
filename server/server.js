@@ -8,7 +8,7 @@ var app = module.exports = loopback();
 app.middleware('initial', bodyParser.urlencoded({ extended: true }));
 
 // Bootstrap the application, configure models, datasources and middleware.
-// Sub-apps like REST API are mounted via boot scripts.
+
 boot(app, __dirname);
 
 app.set('view engine', 'ejs'); // LoopBack comes with EJS out-of-box
@@ -35,3 +35,4 @@ app.start = function() {
 if (require.main === module) {
   app.start();
 }
+
