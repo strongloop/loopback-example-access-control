@@ -257,10 +257,4 @@ Start the server (`node .`) and open [`localhost:3000`][localhost] in your brows
 
 ---
 
-- [Next tutorial][next-tutorial]
-- [All tutorials][all-tutorials]
-
-[all-tutorials]: https://github.com/strongloop/loopback-example
-[explorer]: http://localhost:3000/explorer
-[localhost]: http://localhost:3000
-[next-tutorial]: https://github.com/strongloop/loopback-example-angular
+[More LoopBack examples](https://github.com/strongloop/loopback-example)
