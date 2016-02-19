@@ -4,11 +4,11 @@
   "idInjection": true,
   "properties": {
     "ownerId": {
-      "type": "number",
+      "type": "string",
       "required": true
     },
     "memberId": {
-      "type": "number",
+      "type": "string",
       "required": true
     }
   },
