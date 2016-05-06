@@ -1,3 +1,8 @@
+// Copyright IBM Corp. 2015,2016. All Rights Reserved.
+// Node module: loopback-example-access-control
+// This file is licensed under the Artistic License 2.0.
+// License text available at https://opensource.org/licenses/Artistic-2.0
+
 var bodyParser = require('body-parser');
 var boot = require('loopback-boot');
 var loopback = require('loopback');
