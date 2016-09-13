@@ -155,8 +155,6 @@ Create a [`views` directory](https://github.com/strongloop/loopback-example-acce
 $ mkdir server/views
 ```
 
-Add [server-side templating configurations to `server.js`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/server.js#L11-L20).
-
 Create [`index.ejs` in the views directory](https://github.com/strongloop/loopback-example-access-control/blob/master/server/views/index.ejs).
 
 [Configure `server.js`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/server.js#L11-L20) to use server-side
