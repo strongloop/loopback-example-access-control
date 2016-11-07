@@ -2,11 +2,7 @@
   "name": "user",
   "base": "User",
   "idInjection": true,
-  "properties": {
-    "username": {
-      "type": "string"
-    }
-  },
+  "properties": {},
   "validations": [],
   "relations": {
     "projects": {
