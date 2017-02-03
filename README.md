@@ -24,9 +24,7 @@ application's ACL (access control list) entries.
 ### Tutorials
 
 - [Getting started with LoopBack](http://docs.strongloop.com/display/LB/Getting+started+with+LoopBack)
-- [Tutorial series - step 1](https://github.com/strongloop/loopback-example#step-one---the-basics)
-- [Tutorial series - step 2](https://github.com/strongloop/loopback-example#step-two---relations-and-filter)
-- [Tutorial series - step 3](https://github.com/strongloop/loopback-example#step-three---adding-application-logic)
+- [Other tutorials and examples](https://loopback.io/doc/en/lb3/Tutorials-and-examples.html)
 
 ### Knowledge
 
