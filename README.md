@@ -253,4 +253,4 @@ Start the server (`node .`) and open [`localhost:3000`](http://localhost:3000) i
 
 ---
 
-[More LoopBack examples](https://github.com/strongloop/loopback-example)
+[More LoopBack examples](https://loopback.io/doc/en/lb3/Tutorials-and-examples.html)
