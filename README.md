@@ -4,7 +4,7 @@
 $ git clone https://github.com/strongloop/loopback-example-access-control
 $ cd loopback-example-access-control
 $ npm install
-Change credential of `mycloudant` in server/datasources.json to your cloudant credential
+Manually change credential of `mycloudant` in server/datasources.json to your cloudant credential
 $ node .
 ```
 
@@ -104,6 +104,8 @@ $ lb datasource
 $ lb model user
 ... # follow the prompts, repeat for `team` and `project`
 ```
+
+**Important** `Role`, `RoleMapping`, `ACL`, `AccessToken`, `User` are attached to `db` by default, but since this branch demos access control with cloudant datasource, please go to `server/model-config.json` and manually change their datasource to `mycloudant`.
 
 ### Define the remote methods
 
