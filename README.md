@@ -1,9 +1,10 @@
-# loopback-example-access-control
+# loopback-example-access-control(use datasource cloudant)
 
 ```
 $ git clone https://github.com/strongloop/loopback-example-access-control
 $ cd loopback-example-access-control
 $ npm install
+Change credential of `mycloudant` in server/datasources.json to your cloudant credential
 $ node .
 ```
 
@@ -48,19 +49,31 @@ $ lb app loopback-example-access-control
 ... # follow the prompts
 $ cd loopback-example-access-control
 ```
+### Add the datasource
+- Name: `mycloudant`
+  - datasource: `cloudant`
+  - url: `your_cloudant_url`
+  - database: `your_cloudant_database`
+  - username: `your_cloudant_username`
+  - password: `your_cloudant_password`
+
+```
+$ lb datasource
+... # follow the prompts to provide your credential
+```
 
 ### Add the models
 
 #### Model information
 - Name: `user`
-  - Datasource: `db (memory)`
+  - Datasource: `mycloudant`
   - Base class: `User`
   - Expose via REST: `No`
   - Custom plural form: *Leave blank*
   - Properties
     - *None*
 - Name: `team`
-  - Datasource: `db (memory)`
+  - Datasource: `mycloudant`
   - Base class: `PersistedModel`
   - Expose via REST: `No`
   - Custom plural form: *Leave blank*
@@ -72,7 +85,7 @@ $ cd loopback-example-access-control
       - Number
       - Required
 - Name: `project`
-  - Datasource: `db (memory)`
+  - Datasource: `mycloudant`
   - Base class: `PersistedModel`
   - Expose via REST: `Yes`
   - Custom plural form: *Leave blank*
@@ -128,7 +141,7 @@ Define three remote methods in [`project.js`](https://github.com/strongloop/loop
 
 ### Add model instances
 
-Create a boot script named [`sample-models.js`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/boot/sample-models.js).
+Create a boot script named [`sample-models.js`](https://github.com/strongloop/loopback-example-access-control/blob/use-datasource-cloudant/server/boot/sample-models.js).
 
 This script does the following:
 
@@ -177,7 +190,7 @@ In this directory, create [`index.ejs`](https://github.com/strongloop/loopback-e
 
 ### Create a role resolver
 
-Create [`role-resolver.js`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/boot/role-resolver.js).
+Create [`role-resolver.js`](https://github.com/strongloop/loopback-example-access-control/blob/use-datasource-cloudant/server/boot/role-resolver.js).
 
 > This file checks if the context relates to the project model and if the
 > request maps to a user. If these two requirements are not met, the request is

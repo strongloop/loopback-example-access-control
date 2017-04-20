@@ -5,7 +5,7 @@
   },
   "mycloudant": {
     "url": "your_cloudant_server_url",
-    "database": "dev",
+    "database": "your_cloudant_database",
     "username": "",
     "password": "",
     "name": "mycloudant",

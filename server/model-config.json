@@ -28,11 +28,11 @@
     "public": false
   },
   "team": {
-    "dataSource": "db",
+    "dataSource": "mycloudant",
     "public": false
   },
   "project": {
-    "dataSource": "db",
+    "dataSource": "mycloudant",
     "public": true
   },
   "user": {
