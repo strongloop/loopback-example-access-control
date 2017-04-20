@@ -2,10 +2,13 @@
   "name": "user",
   "base": "User",
   "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
   "properties": {},
   "validations": [],
   "relations": {
-    "projects": {
+     "projects": {
       "type": "hasMany",
       "model": "project",
       "foreignKey": "ownerId"
@@ -17,5 +20,5 @@
     }
   },
   "acls": [],
-  "methods": []
+  "methods": {}
 }

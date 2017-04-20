@@ -8,28 +8,24 @@
     ]
   },
   "User": {
-    "dataSource": "db",
+    "dataSource": "mycloudant",
     "public": false
   },
   "AccessToken": {
-    "dataSource": "db",
+    "dataSource": "mycloudant",
     "public": false
   },
   "ACL": {
-    "dataSource": "db",
+    "dataSource": "mycloudant",
     "public": false
   },
   "RoleMapping": {
-    "dataSource": "db",
+    "dataSource": "mycloudant",
     "public": false
   },
   "Role": {
-    "dataSource": "db",
+    "dataSource": "mycloudant",
     "public": false
-  },
-  "user": {
-    "dataSource": "db",
-    "public": true
   },
   "team": {
     "dataSource": "db",
@@ -37,6 +33,10 @@
   },
   "project": {
     "dataSource": "db",
+    "public": true
+  },
+  "user": {
+    "dataSource": "mycloudant",
     "public": true
   }
 }
