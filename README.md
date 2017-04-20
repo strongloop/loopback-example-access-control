@@ -105,7 +105,10 @@ $ lb model user
 ... # follow the prompts, repeat for `team` and `project`
 ```
 
-**Important** `Role`, `RoleMapping`, `ACL`, `AccessToken`, `User` are attached to `db` by default, but since this branch demos access control with cloudant datasource, please go to `server/model-config.json` and manually change their datasource to `mycloudant`.
+> **Important:** `Role`, `RoleMapping`, `ACL`, `AccessToken`, `User` are
+> attached to `db` by default, but since this branch demos access control with
+> cloudant datasource, please go to `server/model-config.json` and manually
+> change their datasource to `mycloudant`.
 
 ### Define the remote methods
 
