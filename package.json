@@ -13,6 +13,7 @@
     "cors": "^2.8.1",
     "loopback": "^3.0.0",
     "loopback-boot": "^2.4.0",
+    "loopback-connector-cloudant": "^2.0.0",
     "serve-favicon": "^2.0.1",
     "strong-error-handler": "^1.1.1",
     "supertest": "^1.1.0"

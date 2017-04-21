@@ -8,7 +8,7 @@
   "properties": {},
   "validations": [],
   "relations": {
-     "projects": {
+    "projects": {
       "type": "hasMany",
       "model": "project",
       "foreignKey": "ownerId"
