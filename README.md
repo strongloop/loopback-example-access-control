@@ -4,7 +4,7 @@
 $ git clone https://github.com/strongloop/loopback-example-access-control
 $ cd loopback-example-access-control
 $ npm install
-Manually change credential of `mycloudant` in server/datasources.json to your cloudant credential
+Go to server/datasources.json and change the credential of `mycloudant` to your cloudant credential.
 $ node .
 ```
 
@@ -50,6 +50,11 @@ $ lb app loopback-example-access-control
 $ cd loopback-example-access-control
 ```
 ### Add the datasource
+
+Cloudant credential requires a combination of either `url` & `database`, or `username` & `password` & `database`. The following example includes all of them, but you don't need to provide all, and `url` will override `username` & `password` if provided. 
+
+For details of how to set the config, please check https://github.com/strongloop/loopback-connector-cloudant#configuration
+
 - Name: `mycloudant`
   - datasource: `cloudant`
   - url: `your_cloudant_url`
