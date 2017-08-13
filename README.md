@@ -19,6 +19,13 @@ LoopBack. The application consists of four types of users:
 Each user type has permission to perform tasks based on their role and the
 application's ACL (access control list) entries.
 
+## MySQL
+
+This example has been modified for MySQL storage purpose.
+It creates database structure in local mysql server and loads test data after the node run command (node .)
+
+You need to create MySQL database first with the settings written in server/datasources.json
+
 ## Prerequisites
 
 ### Tutorials
@@ -52,15 +59,15 @@ $ cd loopback-example-access-control
 ### Add the models
 
 #### Model information
-- Name: `user`
-  - Datasource: `db (memory)`
+- Name: `appuser`
+  - Datasource: `db`
   - Base class: `User`
   - Expose via REST: `No`
   - Custom plural form: *Leave blank*
   - Properties
     - *None*
 - Name: `team`
-  - Datasource: `db (memory)`
+  - Datasource: `db`
   - Base class: `PersistedModel`
   - Expose via REST: `No`
   - Custom plural form: *Leave blank*
@@ -72,7 +79,7 @@ $ cd loopback-example-access-control
       - Number
       - Required
 - Name: `project`
-  - Datasource: `db (memory)`
+  - Datasource: `db`
   - Base class: `PersistedModel`
   - Expose via REST: `Yes`
   - Custom plural form: *Leave blank*
