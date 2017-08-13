@@ -2,27 +2,30 @@
   "name": "loopback-example-access-control",
   "version": "1.0.0",
   "main": "server/server.js",
+  "engines": {
+    "node": ">=4"
+  },
   "scripts": {
-    "pretest": "jshint .",
+    "lint": "eslint .",
     "start": "node .",
-    "test": "mocha test/*test.js"
+    "posttest": "npm run lint && nsp check"
   },
   "dependencies": {
-    "body-parser": "^1.10.1",
-    "compression": "^1.0.3",
-    "cors": "^2.8.1",
-    "loopback": "^3.0.0",
-    "loopback-boot": "^2.4.0",
-    "serve-favicon": "^2.0.1",
-    "strong-error-handler": "^1.1.1",
-    "supertest": "^1.1.0"
-  },
-  "optionalDependencies": {
-    "loopback-component-explorer": "^2.1.0"
+    "compression": "^1.7.0",
+    "cors": "^2.8.4",
+    "helmet": "^3.8.1",
+    "loopback": "^3.9.0",
+    "loopback-boot": "^2.26.0",
+    "loopback-component-explorer": "^4.2.0",
+    "loopback-connector-mysql": "^5.0.0",
+    "serve-favicon": "^2.4.3",
+    "strong-error-handler": "^2.2.0"
   },
   "devDependencies": {
-    "jshint": "^2.5.6",
-    "mocha": "^2.3.3"
+    "eslint": "^4.4.1",
+    "eslint-config-loopback": "^8.0.0",
+    "eslint-plugin-react": "^7.2.0",
+    "nsp": "^2.1.0"
   },
   "repository": {
     "type": "git",
