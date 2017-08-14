@@ -24,7 +24,6 @@
   "devDependencies": {
     "eslint": "^4.4.1",
     "eslint-config-loopback": "^8.0.0",
-    "eslint-plugin-react": "^7.2.0",
     "nsp": "^2.1.0"
   },
   "repository": {

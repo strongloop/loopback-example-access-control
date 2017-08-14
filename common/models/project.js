@@ -3,18 +3,20 @@
 // This file is licensed under the Artistic License 2.0.
 // License text available at https://opensource.org/licenses/Artistic-2.0
 
+'use strict';
+
 module.exports = function(Project) {
   // listProjects
   Project.listProjects = function(cb) {
     Project.find({
       fields: {
-        balance: false
-      }
+        balance: false,
+      },
     }, cb);
   };
   Project.remoteMethod('listProjects', {
     returns: {arg: 'projects', type: 'array'},
-    http: {path:'/list-projects', verb: 'get'}
+    http: {path: '/list-projects', verb: 'get'},
   });
 
   // donate
@@ -34,7 +36,7 @@ module.exports = function(Project) {
       {arg: 'amount', type: 'number'},
     ],
     returns: {arg: 'success', type: 'boolean'},
-    http: {path:'/donate', verb: 'post'}
+    http: {path: '/donate', verb: 'post'},
   });
 
   // withdraw
@@ -43,7 +45,7 @@ module.exports = function(Project) {
       if (err) return cb(err);
 
       project.balance = project.balance >= amount ?
-          project.balance - amount : 0;
+        project.balance - amount : 0;
       project.save();
 
       cb(null, true);
@@ -55,6 +57,6 @@ module.exports = function(Project) {
       {arg: 'amount', type: 'number'},
     ],
     returns: {arg: 'success', type: 'boolean'},
-    http: {path:'/withdraw', verb: 'post'}
+    http: {path: '/withdraw', verb: 'post'},
   });
 };

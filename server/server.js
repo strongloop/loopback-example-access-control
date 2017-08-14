@@ -3,6 +3,8 @@
 // This file is licensed under the Artistic License 2.0.
 // License text available at https://opensource.org/licenses/Artistic-2.0
 
+'use strict';
+
 var bodyParser = require('body-parser');
 var boot = require('loopback-boot');
 var loopback = require('loopback');
@@ -10,7 +12,7 @@ var path = require('path');
 
 var app = module.exports = loopback();
 
-app.middleware('initial', bodyParser.urlencoded({ extended: true }));
+app.middleware('initial', bodyParser.urlencoded({extended: true}));
 
 // Bootstrap the application, configure models, datasources and middleware.
 
