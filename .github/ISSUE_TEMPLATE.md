@@ -1,36 +1,29 @@
 <!--
-- Please ask questions at https://groups.google.com/forum/#!forum/loopbackjs or
+Questions:
+  https://groups.google.com/forum/#!forum/loopbackjs
   https://gitter.im/strongloop/loopback
-
-- Immediate support is available through our subscription plans, see
+Immediate support:
   https://strongloop.com/api-connect-faqs/
+  https://strongloop.com/node-js/subscription-plans/
 -->
 
-### Bug or feature request
+# Description/Steps to reproduce
 
 <!--
-Mark your choice with an "x" (eg. [x], NOT [*]).
+If feature: A description of the feature
+If bug: Steps to reproduce + link to sample repo
 -->
 
-- [ ] Bug
-- [ ] Feature request
+# Expected result
 
-### Description of feature (or steps to reproduce if bug)
+<!--
+Also include actual results if bug
+-->
 
+# Additional information
 
-
-### Link to sample repo to reproduce issue (if bug)
-
-
-
-### Expected result
-
-
-
-### Actual result (if bug)
-
-
-
-### Additional information (Node.js version, LoopBack version, etc)
-
-
+<!--
+Copy+paste the output of these two commands:
+  node -e 'console.log(process.platform, process.arch, process.versions.node)'
+  npm ls --prod --depth 0 | grep loopback
+-->
