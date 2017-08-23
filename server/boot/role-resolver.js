@@ -3,6 +3,8 @@
 // This file is licensed under the Artistic License 2.0.
 // License text available at https://opensource.org/licenses/Artistic-2.0
 
+'use strict';
+
 module.exports = function(app) {
   var Role = app.models.Role;
 
@@ -32,7 +34,7 @@ module.exports = function(app) {
       var Team = app.models.Team;
       Team.count({
         ownerId: project.ownerId,
-        memberId: userId
+        memberId: userId,
       }, function(err, count) {
         if (err) {
           console.log(err);

@@ -3,12 +3,14 @@
 // This file is licensed under the Artistic License 2.0.
 // License text available at https://opensource.org/licenses/Artistic-2.0
 
+'use strict';
+
 module.exports = function(app) {
   var router = app.loopback.Router();
 
   router.get('/', function(req, res) {
     res.render('index', {
-      loginFailed: false
+      loginFailed: false,
     });
   });
 
@@ -22,20 +24,20 @@ module.exports = function(app) {
 
     app.models.User.login({
       email: email,
-      password: password
+      password: password,
     }, 'user', function(err, token) {
       if (err)
         return res.render('index', {
           email: email,
           password: password,
-          loginFailed: true
+          loginFailed: true,
         });
 
       token = token.toJSON();
 
       res.render('projects', {
         username: token.user.username,
-        accessToken: token.id
+        accessToken: token.id,
       });
     });
   });

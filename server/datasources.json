@@ -1,6 +1,12 @@
 {
   "db": {
+    "host": "127.0.0.1",
+    "port": 3306,
+    "database": "loopbackdb",
+    "password": "123loopbackdb",
     "name": "db",
-    "connector": "memory"
+    "connector": "mysql",
+    "user": "loopbackadmin",
+    "debug": false
   }
 }
