@@ -111,7 +111,7 @@ Define three remote methods in [`project.js`](https://github.com/strongloop/loop
       - Custom foreign key: `ownerId`
       - Require a through model: No
     - `team`
-      - Property name for the relation: `teams`
+      - Property name for the relation: `teamMembers`
       - Custom foreign key: `ownerId`
       - Require a through model: No
 - `team`
