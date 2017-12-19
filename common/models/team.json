@@ -16,7 +16,7 @@
   "relations": {
     "members": {
       "type": "hasMany",
-      "model": "user",
+      "model": "account",
       "foreignKey": "memberId"
     }
   },

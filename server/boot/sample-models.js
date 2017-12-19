@@ -4,12 +4,12 @@
 // License text available at https://opensource.org/licenses/Artistic-2.0
 
 module.exports = function(app) {
-  var User = app.models.user;
+  var Account = app.models.account;
   var Role = app.models.Role;
   var RoleMapping = app.models.RoleMapping;
   var Team = app.models.Team;
 
-  User.create([
+ Account.create([
     {username: 'John', email: 'john@doe.com', password: 'opensesame'},
     {username: 'Jane', email: 'jane@doe.com', password: 'opensesame'},
     {username: 'Bob', email: 'bob@projects.com', password: 'opensesame'}

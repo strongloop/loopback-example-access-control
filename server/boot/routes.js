@@ -20,7 +20,7 @@ module.exports = function(app) {
     var email = req.body.email;
     var password = req.body.password;
 
-    app.models.User.login({
+    app.models.Account.login({
       email: email,
       password: password
     }, 'user', function(err, token) {

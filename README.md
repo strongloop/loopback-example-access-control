@@ -52,7 +52,7 @@ $ cd loopback-example-access-control
 ### Add the models
 
 #### Model information
-- Name: `user`
+- Name: `account`
   - Datasource: `db (memory)`
   - Base class: `User`
   - Expose via REST: `No`
@@ -84,11 +84,11 @@ $ cd loopback-example-access-control
       - Number
       - Not required
 
-> No properties are required for the `user` model because we inherit them from
+> No properties are required for the `account` model because we inherit them from
 > the built-in `User` model by specifying it as the base class.
 
 ```
-$ lb model user
+$ lb model account
 ... # follow the prompts, repeat for `team` and `project`
 ```
 
@@ -104,7 +104,7 @@ Define three remote methods in [`project.js`](https://github.com/strongloop/loop
 
 #### Model relation information
 
-- `user`
+- `account`
   - has many
     - `project`
       - Property name for the relation: `projects`
@@ -116,13 +116,13 @@ Define three remote methods in [`project.js`](https://github.com/strongloop/loop
       - Require a through model: No
 - `team`
   - has many
-    - `user`
+    - `account`
       - Property name for the relation: `members`
       - Custom foreign key: `memberId`
       - Require a through model: No
 - `project`
   - belongs to
-    - `user`
+    - `account`
       - Property name for the relation: `user`
       - Custom foreign key: `ownerId`
 
@@ -167,7 +167,7 @@ Create [`routes.js`](https://github.com/strongloop/loopback-example-access-contr
 - Sets the [`POST /projects` route to to render `projects.ejs` when credentials are valid](server/views/projects.ejs) and [renders `index.ejs`](https://github.com/strongloop/loopback-example-access-control/blob/master/server/views/index.ejs) when credentials are invalid
 - Sets the [`GET /logout` route to log the user out](https://github.com/strongloop/loopback-example-access-control/blob/master/server/views/routes.js)
 
-> When you log in sucessfully, `projects.html` is rendered with the authenticated user's access token embedded into each link.
+> When you log in sucessfully, `projects.html` is rendered with the authenticated account's access token embedded into each link.
 
 ### Create the views
 

@@ -27,7 +27,7 @@
     "dataSource": "db",
     "public": false
   },
-  "user": {
+  "account": {
     "dataSource": "db",
     "public": true
   },
