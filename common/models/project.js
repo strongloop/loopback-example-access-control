@@ -31,7 +31,7 @@ module.exports = function(Project) {
   Project.remoteMethod('donate', {
     accepts: [
       {arg: 'id', type: 'number'},
-      {arg: 'amount', type: 'number'},
+      {arg: 'amount', type: 'number'}
     ],
     returns: {arg: 'success', type: 'boolean'},
     http: {path:'/donate', verb: 'post'}
@@ -52,7 +52,7 @@ module.exports = function(Project) {
   Project.remoteMethod('withdraw', {
     accepts: [
       {arg: 'id', type: 'number'},
-      {arg: 'amount', type: 'number'},
+      {arg: 'amount', type: 'number'}
     ],
     returns: {arg: 'success', type: 'boolean'},
     http: {path:'/withdraw', verb: 'post'}
