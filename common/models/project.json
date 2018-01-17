@@ -12,9 +12,9 @@
   },
   "validations": [],
   "relations": {
-    "user": {
+    "account": {
       "type": "belongsTo",
-      "model": "user",
+      "model": "account",
       "foreignKey": "ownerId"
     }
   },
