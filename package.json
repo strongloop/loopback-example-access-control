@@ -12,9 +12,9 @@
     "compression": "^1.0.3",
     "cors": "^2.8.1",
     "loopback": "^3.0.0",
-    "loopback-boot": "^2.4.0",
+    "loopback-boot": "^3.1.1",
     "serve-favicon": "^2.0.1",
-    "strong-error-handler": "^1.1.1",
+    "strong-error-handler": "^3.0.0",
     "supertest": "^1.1.0"
   },
   "optionalDependencies": {
