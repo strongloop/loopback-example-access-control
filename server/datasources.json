@@ -2,5 +2,14 @@
   "db": {
     "name": "db",
     "connector": "memory"
+  },
+  "mycloudant": {
+    "url": "your_cloudant_server_url",
+    "database": "your_cloudant_database",
+    "username": "",
+    "password": "",
+    "name": "mycloudant",
+    "modelIndex": "",
+    "connector": "cloudant"
   }
 }
