@@ -14,15 +14,15 @@
     "loopback": "^3.0.0",
     "loopback-boot": "^2.4.0",
     "serve-favicon": "^2.0.1",
-    "strong-error-handler": "^1.1.1",
-    "supertest": "^1.1.0"
+    "strong-error-handler": "^3.2.0",
+    "supertest": "^3.3.0"
   },
   "optionalDependencies": {
     "loopback-component-explorer": "^2.1.0"
   },
   "devDependencies": {
     "jshint": "^2.5.6",
-    "mocha": "^2.3.3"
+    "mocha": "^5.2.0"
   },
   "repository": {
     "type": "git",
