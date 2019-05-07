@@ -28,5 +28,6 @@
     "type": "git",
     "url": "git://github.com/strongloop/loopback-example-access-control"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "author": "IBM Corp."
 }
