@@ -247,7 +247,7 @@ Start the server (`node .`) and open [`localhost:3000`](http://localhost:3000) i
 - Jane `Project team member`
   - Role = $everyone, $authenticated, teamMember
   - Can access all functions except "View all projects" and "Withdraw"
-- Bob `Administator`
+- Bob `Administrator`
   - Role = $everyone, $authenticated, admin
   - Can access all functions except "Withdraw"
 
