@@ -1,5 +1,7 @@
 # loopback-example-access-control
 
+**⚠️ This LoopBack 3 example project is no longer maintained. Please refer to [LoopBack 4 Examples](https://loopback.io/doc/en/lb4/Examples.html) instead. ⚠️**
+
 ```
 $ git clone https://github.com/strongloop/loopback-example-access-control
 $ cd loopback-example-access-control
